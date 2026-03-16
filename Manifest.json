@@ -1,0 +1,9 @@
+{
+  "name": "Roommate Hub",
+  "short_name": "RoommateHub",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f4ff",
+  "theme_color": "#534AB7",
+  "icons": [{"src": "https://via.placeholder.com/192", "sizes": "192x192", "type": "image/png"}]
+}

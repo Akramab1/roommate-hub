@@ -25,7 +25,6 @@ input,select,textarea,button{font-family:inherit;font-size:14px}
 .form-group input{width:100%;padding:10px 12px;border:1.5px solid #e0e0f0;border-radius:10px;font-size:14px;outline:none;transition:border .2s}
 .form-group input:focus{border-color:#534AB7}
 .btn-login{width:100%;padding:12px;background:#534AB7;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:.5rem}
-.btn-login:active{opacity:.85}
 .login-error{color:#c0392b;font-size:13px;text-align:center;margin-top:.5rem;min-height:18px}
 .app-wrap{max-width:600px;margin:0 auto;padding-bottom:80px}
 .topbar{background:#534AB7;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
@@ -56,7 +55,6 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0}
 .avatar-sm{width:26px;height:26px;font-size:11px}
 .list-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eef;border-radius:10px;background:#fff;margin-bottom:8px}
-.list-item .name{flex:1;font-size:14px}
 .notice-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #eef}
 .notice-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .notice-text{font-size:14px;line-height:1.6;color:#333}
@@ -76,32 +74,45 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 .admin-badge.user{background:#E1F5EE;color:#085041;border-color:#0F6E56}
 .empty{text-align:center;color:#aaa;font-size:13px;padding:2rem 0}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
-.modal{background:#fff;border-radius:16px;padding:1.5rem;width:100%;max-width:360px}
+.modal{background:#fff;border-radius:16px;padding:1.5rem;width:100%;max-width:380px;max-height:90vh;overflow-y:auto}
 .modal h3{font-size:16px;font-weight:600;margin-bottom:1rem}
 .modal-actions{display:flex;gap:8px;margin-top:1rem;justify-content:flex-end}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid #534AB7;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
-.spinner-white{border-color:rgba(255,255,255,.5);border-top-color:transparent}
 @keyframes spin{to{transform:rotate(360deg)}}
 .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .tag{padding:4px 12px;border-radius:99px;font-size:12px;cursor:pointer;border:1.5px solid #ddd;background:#f9f9f9;color:#555}
 .tag.active{border-color:#534AB7;background:#EEEDFE;color:#3C3489}
 .loading-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.loading-screen .icon{font-size:48px}
-.loading-screen p{color:#534AB7;font-size:15px;font-weight:500}
+/* VACATION */
+.vac-card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #eef}
+.vac-stat{display:flex;flex-direction:column;align-items:center;padding:14px;border-radius:10px;flex:1}
+.vac-stat .num{font-size:26px;font-weight:700}
+.vac-stat .lbl{font-size:11px;color:#888;margin-top:3px}
+.vac-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f8}
+/* WALLET */
+.wallet-section{margin-bottom:16px}
+.wallet-section-title{font-size:13px;font-weight:600;color:#444;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.doc-card{background:#fff;border:1px solid #eef;border-radius:10px;padding:12px;margin-bottom:8px}
+.doc-img{width:100%;border-radius:8px;margin-top:8px;cursor:pointer;max-height:200px;object-fit:cover}
+.doc-img-thumb{width:60px;height:40px;border-radius:6px;object-fit:cover;cursor:pointer;border:1px solid #eee}
+.img-preview-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:300;padding:1rem}
+.img-preview-bg img{max-width:100%;max-height:90vh;border-radius:10px}
+.progress-bar-wrap{background:#f0f0f8;border-radius:99px;height:8px;width:100%;margin-top:6px}
+.progress-bar{background:#534AB7;height:8px;border-radius:99px;transition:width .4s}
+.progress-bar.warn{background:#EF9F27}
+.progress-bar.danger{background:#E24B4A}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="screen-loading" class="screen active">
   <div class="loading-screen">
-    <div class="icon">🏠</div>
+    <div style="font-size:48px">🏠</div>
     <div class="spinner" style="width:24px;height:24px;border-color:#534AB7;border-top-color:transparent"></div>
-    <p>Loading Roommate Hub...</p>
+    <p style="color:#534AB7;font-size:15px;font-weight:500">Loading Roommate Hub...</p>
   </div>
 </div>
 
-<!-- LOGIN -->
 <div id="screen-login" class="screen">
   <div class="login-wrap">
     <div class="login-card">
@@ -124,7 +135,6 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   </div>
 </div>
 
-<!-- APP -->
 <div id="screen-app" class="screen">
   <div class="app-wrap">
     <div class="topbar">
@@ -133,13 +143,15 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <span class="topbar-user" id="topbar-name"></span>
       <button class="topbar-logout" onclick="doLogout()">Sign out</button>
     </div>
-    <div class="tabs-wrap">
-      <button class="tab-btn active" onclick="switchTab('chores',this)">Chores</button>
-      <button class="tab-btn" onclick="switchTab('expenses',this)">Expenses</button>
-      <button class="tab-btn" onclick="switchTab('essentials',this)">Gas/Essentials</button>
-      <button class="tab-btn" onclick="switchTab('board',this)">Noticeboard</button>
-      <button class="tab-btn" onclick="switchTab('ai',this)">AI Resolver</button>
-      <button class="tab-btn" id="admin-tab-btn" onclick="switchTab('admin',this)" style="display:none">⚙ Admin</button>
+    <div class="tabs-wrap" id="main-tabs">
+      <button class="tab-btn active" onclick="switchTab('chores',this)">🧹 Chores</button>
+      <button class="tab-btn" onclick="switchTab('expenses',this)">💸 Expenses</button>
+      <button class="tab-btn" onclick="switchTab('essentials',this)">⛽ Essentials</button>
+      <button class="tab-btn" onclick="switchTab('board',this)">📋 Board</button>
+      <button class="tab-btn" onclick="switchTab('vacation',this)">🏖️ Vacation</button>
+      <button class="tab-btn" onclick="switchTab('wallet',this)">💳 DIGI Wallet</button>
+      <button class="tab-btn" onclick="switchTab('ai',this)">🤖 AI</button>
+      <button class="tab-btn" id="admin-tab-btn" onclick="switchTab('admin',this)" style="display:none">⚙️ Admin</button>
     </div>
 
     <!-- CHORES -->
@@ -181,27 +193,18 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
         <div class="card-title">Log a purchase</div>
         <div class="row" style="margin-bottom:8px">
           <select class="inp" id="ess-item">
-            <option>Gas</option>
-            <option>Water filter</option>
-            <option>Dish wash liquid</option>
-            <option>Hand wash</option>
-            <option>Room cleaning</option>
+            <option>Gas</option><option>Water filter</option>
+            <option>Dish wash liquid</option><option>Hand wash</option><option>Room cleaning</option>
           </select>
           <select class="inp" id="ess-buyer"><option value="">Who bought it?</option></select>
         </div>
         <div class="row" style="margin-bottom:8px">
-          <div style="flex:1">
-            <div class="section-label">Purchase date</div>
-            <input class="inp" type="date" id="ess-date"/>
-          </div>
-          <div style="flex:1">
-            <div class="section-label">WhatsApp no. (optional)</div>
-            <input class="inp" id="ess-phone" placeholder="+965XXXXXXXX"/>
-          </div>
+          <div style="flex:1"><div class="section-label">Purchase date</div><input class="inp" type="date" id="ess-date"/></div>
+          <div style="flex:1"><div class="section-label">WhatsApp no. (optional)</div><input class="inp" id="ess-phone" placeholder="+965XXXXXXXX"/></div>
         </div>
         <button class="btn btn-primary btn-full" onclick="logEssential()">Log purchase</button>
       </div>
-      <div class="card-title" style="padding:0 4px 8px;color:#666">Last purchased</div>
+      <div style="padding:0 4px 8px;font-size:13px;font-weight:600;color:#666">Last purchased</div>
       <div id="ess-last"></div>
       <div id="ess-history-wrap" style="display:none">
         <div class="card" style="background:#f8f8ff">
@@ -221,10 +224,20 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <div id="notices-list"></div>
     </div>
 
+    <!-- VACATION -->
+    <div id="tab-vacation" class="tab-content">
+      <div id="vac-content"></div>
+    </div>
+
+    <!-- DIGI WALLET -->
+    <div id="tab-wallet" class="tab-content">
+      <div id="wallet-content"></div>
+    </div>
+
     <!-- AI -->
     <div id="tab-ai" class="tab-content">
       <div class="ai-banner">
-        <div style="font-weight:600;color:#3C3489;margin-bottom:4px">AI House Mediator</div>
+        <div style="font-weight:600;color:#3C3489;margin-bottom:4px">🤖 AI House Mediator</div>
         <div style="font-size:13px;color:#534AB7">Ask about house rules, resolve disputes, or get fair advice.</div>
       </div>
       <div>
@@ -241,8 +254,8 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <!-- ADMIN -->
     <div id="tab-admin" class="tab-content">
       <div class="card" style="background:#EEEDFE;border-color:#AFA9EC">
-        <div style="font-weight:600;color:#3C3489;margin-bottom:4px">Admin Panel</div>
-        <div style="font-size:13px;color:#534AB7">Manage roommate accounts, reset passwords, add or remove users.</div>
+        <div style="font-weight:600;color:#3C3489;margin-bottom:4px">⚙️ Admin Panel</div>
+        <div style="font-size:13px;color:#534AB7">Manage roommate accounts, reset passwords, vacation days.</div>
       </div>
       <div class="card">
         <div class="card-title">Add new user</div>
@@ -250,10 +263,12 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
           <input class="inp" id="new-user-name" placeholder="Full name"/>
           <input class="inp" id="new-user-pass" placeholder="Password" type="password"/>
         </div>
-        <select class="inp" id="new-user-role" style="margin-bottom:8px;width:100%">
-          <option value="user">Roommate (user)</option>
-          <option value="admin">Admin</option>
-        </select>
+        <div class="row" style="margin-bottom:8px">
+          <div style="flex:1"><div class="section-label">Join date</div><input class="inp" type="date" id="new-user-join"/></div>
+          <div style="flex:1"><div class="section-label">Role</div>
+            <select class="inp" id="new-user-role"><option value="user">Roommate</option><option value="admin">Admin</option></select>
+          </div>
+        </div>
         <button class="btn btn-primary btn-full" onclick="adminAddUser()">Add user</button>
       </div>
       <div class="card">
@@ -272,284 +287,372 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
     <input class="inp" id="reset-pass2" type="password" placeholder="Confirm password"/>
     <div id="reset-err" style="color:#c0392b;font-size:12px;margin-top:6px;min-height:16px"></div>
     <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn" onclick="closeModal('modal-reset')">Cancel</button>
       <button class="btn btn-primary" onclick="confirmReset()">Save</button>
     </div>
   </div>
 </div>
 
+<!-- LOG VACATION MODAL -->
+<div id="modal-vac" class="modal-bg" style="display:none">
+  <div class="modal">
+    <h3>🏖️ Log vacation</h3>
+    <div class="section-label">Start date</div>
+    <input class="inp" type="date" id="vac-start" style="margin-bottom:8px"/>
+    <div class="section-label">End date (return date)</div>
+    <input class="inp" type="date" id="vac-end" style="margin-bottom:8px"/>
+    <div id="vac-modal-err" style="color:#c0392b;font-size:12px;min-height:16px"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('modal-vac')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmLogVac()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE PREVIEW -->
+<div id="img-preview-bg" class="img-preview-bg" style="display:none" onclick="closeImgPreview()">
+  <img id="img-preview-el" src="" alt="Document"/>
+</div>
+
 <script>
-// ── CONFIG ────────────────────────────────────────────────────
-const BIN_KEY = "$2a$10$veU8LLF/3MHhLryhC0Umcur9/jzg9FzYt8oI9kwT0YdJ0A30W4wTm";
-const BIN_URL_BASE = "https://api.jsonbin.io/v3/b";
-let BIN_ID = localStorage.getItem("rh_bin_id") || null;
+const BIN_KEY="$2a$10$veU8LLF/3MHhLryhC0Umcur9/jzg9FzYt8oI9kwT0YdJ0A30W4wTm";
+const BIN_URL_BASE="https://api.jsonbin.io/v3/b";
+let BIN_ID=localStorage.getItem("rh_bin_id")||null;
 
-const ESSENTIALS_LIST = [
-  {key:"Gas",icon:"⛽"},{key:"Water filter",icon:"💧"},
-  {key:"Dish wash liquid",icon:"🧴"},{key:"Hand wash",icon:"🖐"},{key:"Room cleaning",icon:"🧹"}
-];
-const COLORS = [
-  {bg:"#EEEDFE",text:"#3C3489",border:"#534AB7"},
-  {bg:"#E1F5EE",text:"#085041",border:"#0F6E56"},
-  {bg:"#FAECE7",text:"#712B13",border:"#993C1D"},
-  {bg:"#FBEAF0",text:"#72243E",border:"#993556"},
-  {bg:"#FAEEDA",text:"#633806",border:"#854F0B"},
-  {bg:"#E6F1FB",text:"#0C447C",border:"#185FA5"},
-];
+const ESSENTIALS_LIST=[{key:"Gas",icon:"⛽"},{key:"Water filter",icon:"💧"},{key:"Dish wash liquid",icon:"🧴"},{key:"Hand wash",icon:"🖐"},{key:"Room cleaning",icon:"🧹"}];
+const COLORS=[{bg:"#EEEDFE",text:"#3C3489",border:"#534AB7"},{bg:"#E1F5EE",text:"#085041",border:"#0F6E56"},{bg:"#FAECE7",text:"#712B13",border:"#993C1D"},{bg:"#FBEAF0",text:"#72243E",border:"#993556"},{bg:"#FAEEDA",text:"#633806",border:"#854F0B"},{bg:"#E6F1FB",text:"#0C447C",border:"#185FA5"}];
+const VACATION_DAYS_PER_YEAR=30;
 
-const DEFAULT_DB = {
-  users:[{id:"akram",name:"Akram",password:"akram123",role:"admin",colorIdx:0}],
+const DEFAULT_DB={
+  users:[{id:"akram",name:"Akram",password:"akram123",role:"admin",colorIdx:0,joinDate:"",vacations:[],wallet:{}}],
   chores:[],expenses:[],essentials:[],notices:[]
 };
 
-let DB = null;
-let currentUser = null;
-let resetTargetId = null;
-let saveTimer = null;
+let DB=null,currentUser=null,resetTargetId=null,vacTargetId=null,saveTimer=null;
 
-// ── JSONBIN API ───────────────────────────────────────────────
 async function loadFromCloud(){
   if(BIN_ID){
-    try{
-      const r = await fetch(`${BIN_URL_BASE}/${BIN_ID}/latest`,{headers:{"X-Master-Key":BIN_KEY}});
-      if(r.ok){ const d=await r.json(); return d.record; }
-    }catch(e){}
+    try{const r=await fetch(`${BIN_URL_BASE}/${BIN_ID}/latest`,{headers:{"X-Master-Key":BIN_KEY}});if(r.ok){const d=await r.json();return d.record;}}catch(e){}
   }
-  // create new bin
   try{
-    const r = await fetch(BIN_URL_BASE,{
-      method:"POST",
-      headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"roommate-hub"},
-      body:JSON.stringify(DEFAULT_DB)
-    });
-    if(r.ok){ const d=await r.json(); BIN_ID=d.metadata.id; localStorage.setItem("rh_bin_id",BIN_ID); return DEFAULT_DB; }
+    const r=await fetch(BIN_URL_BASE,{method:"POST",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"roommate-hub"},body:JSON.stringify(DEFAULT_DB)});
+    if(r.ok){const d=await r.json();BIN_ID=d.metadata.id;localStorage.setItem("rh_bin_id",BIN_ID);return DEFAULT_DB;}
   }catch(e){}
   return DEFAULT_DB;
 }
 
 async function saveToCloud(){
-  if(!BIN_ID) return;
-  try{
-    await fetch(`${BIN_URL_BASE}/${BIN_ID}`,{
-      method:"PUT",
-      headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY},
-      body:JSON.stringify(DB)
-    });
-  }catch(e){}
+  if(!BIN_ID)return;
+  try{await fetch(`${BIN_URL_BASE}/${BIN_ID}`,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY},body:JSON.stringify(DB)});}catch(e){}
 }
 
-function saveDB(){
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveToCloud, 800);
-}
+function saveDB(){clearTimeout(saveTimer);saveTimer=setTimeout(saveToCloud,800);}
 
-// ── BOOT ─────────────────────────────────────────────────────
 (async function boot(){
   show("loading");
-  DB = await loadFromCloud();
-  const uid = localStorage.getItem("rh_session");
-  if(uid){
-    const u = DB.users.find(x=>x.id===uid);
-    if(u){ loginAs(u); return; }
-  }
+  DB=await loadFromCloud();
+  // migrate old users without wallet/vacations
+  DB.users=DB.users.map(u=>({vacations:[],wallet:{},...u}));
+  const uid=localStorage.getItem("rh_session");
+  if(uid){const u=DB.users.find(x=>x.id===uid);if(u){loginAs(u);return;}}
   show("login");
 })();
 
-function show(s){
-  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
-  document.getElementById("screen-"+s).classList.add("active");
-}
+function show(s){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById("screen-"+s).classList.add("active");}
 
-// ── AUTH ──────────────────────────────────────────────────────
 function doLogin(){
   const u=document.getElementById("login-user").value.trim().toLowerCase();
   const p=document.getElementById("login-pass").value;
   const user=DB.users.find(x=>x.id===u||x.name.toLowerCase()===u);
-  if(!user||user.password!==p){ document.getElementById("login-err").textContent="Invalid username or password."; return; }
-  localStorage.setItem("rh_session",user.id);
-  loginAs(user);
+  if(!user||user.password!==p){document.getElementById("login-err").textContent="Invalid username or password.";return;}
+  localStorage.setItem("rh_session",user.id);loginAs(user);
 }
 
 function loginAs(user){
   currentUser=user;
   document.getElementById("topbar-name").textContent=user.name+(user.role==="admin"?" 👑":"");
   document.getElementById("admin-tab-btn").style.display=user.role==="admin"?"inline-block":"none";
-  show("app");
-  refreshAll();
+  show("app");refreshAll();
 }
 
-function doLogout(){
-  localStorage.removeItem("rh_session");
-  currentUser=null;
-  document.getElementById("login-user").value="";
-  document.getElementById("login-pass").value="";
-  document.getElementById("login-err").textContent="";
-  show("login");
-}
+function doLogout(){localStorage.removeItem("rh_session");currentUser=null;document.getElementById("login-user").value="";document.getElementById("login-pass").value="";document.getElementById("login-err").textContent="";show("login");}
+document.getElementById("login-pass").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
 
-document.getElementById("login-pass").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
-
-// ── TABS ──────────────────────────────────────────────────────
 function switchTab(name,btn){
   document.querySelectorAll(".tab-content").forEach(x=>x.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));
-  document.getElementById("tab-"+name).classList.add("active");
-  btn.classList.add("active");
-  if(name==="admin") renderAdmin();
+  document.getElementById("tab-"+name).classList.add("active");btn.classList.add("active");
+  if(name==="admin")renderAdmin();
+  if(name==="vacation")renderVacation();
+  if(name==="wallet")renderWallet();
 }
 
-// ── HELPERS ───────────────────────────────────────────────────
-function getColor(idx){ return COLORS[idx%COLORS.length]; }
-function fmtDate(d){ if(!d)return""; try{ return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }catch{return d;} }
-function el(id){ return document.getElementById(id); }
-function badge(label,color){ return `<span class="badge" style="background:${color.bg};color:${color.text};border:1px solid ${color.border}">${label}</span>`; }
-function avatar(name,color,sm){ const i=name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); return `<div class="avatar${sm?" avatar-sm":""}" style="background:${color.bg};border:2px solid ${color.border};color:${color.text}">${i}</div>`; }
+function getColor(idx){return COLORS[idx%COLORS.length];}
+function fmtDate(d){if(!d)return"";try{return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});}catch{return d;}}
+function el(id){return document.getElementById(id);}
+function badge(label,color){return `<span class="badge" style="background:${color.bg};color:${color.text};border:1px solid ${color.border}">${label}</span>`;}
+function avatar(name,color,sm){const i=name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);return `<div class="avatar${sm?" avatar-sm":""}" style="background:${color.bg};border:2px solid ${color.border};color:${color.text}">${i}</div>`;}
 
-function refreshAll(){
-  populateSelects();
-  renderChores();
-  renderExpenses();
-  renderEssentials();
-  renderNotices();
-}
+function refreshAll(){populateSelects();renderChores();renderExpenses();renderEssentials();renderNotices();}
 
 function populateSelects(){
   const users=DB.users;
   ["chore-assign","exp-paidby","ess-buyer"].forEach(id=>{
-    const s=el(id); const v=s.value;
+    const s=el(id);const v=s.value;
     s.innerHTML='<option value="">'+(id==="chore-assign"?"Assign to...":id==="exp-paidby"?"Paid by...":"Who bought it?")+'</option>';
-    users.forEach(u=>{ s.innerHTML+=`<option value="${u.id}">${u.name}</option>`; });
-    s.value=v;
+    users.forEach(u=>{s.innerHTML+=`<option value="${u.id}">${u.name}</option>`;});s.value=v;
   });
-  const st=el("exp-split-tags"); st.innerHTML="";
-  users.forEach(u=>{
-    const t=document.createElement("span");
-    t.className="tag"; t.dataset.uid=u.id; t.textContent=u.name;
-    t.onclick=function(){ this.classList.toggle("active"); };
-    st.appendChild(t);
-  });
+  const st=el("exp-split-tags");st.innerHTML="";
+  users.forEach(u=>{const t=document.createElement("span");t.className="tag";t.dataset.uid=u.id;t.textContent=u.name;t.onclick=function(){this.classList.toggle("active");};st.appendChild(t);});
 }
 
-// ── CHORES ────────────────────────────────────────────────────
-function addChore(){
-  const name=el("chore-name").value.trim(); const asgn=el("chore-assign").value;
-  if(!name||!asgn)return alert("Fill in chore name and assignee.");
-  DB.chores.push({id:Date.now(),name,assignee:asgn,done:false});
-  saveDB(); el("chore-name").value=""; renderChores();
-}
-function toggleChore(id){ const c=DB.chores.find(x=>x.id===id); if(c)c.done=!c.done; saveDB(); renderChores(); }
-function deleteChore(id){ DB.chores=DB.chores.filter(x=>x.id!==id); saveDB(); renderChores(); }
+// CHORES
+function addChore(){const name=el("chore-name").value.trim();const asgn=el("chore-assign").value;if(!name||!asgn)return alert("Fill in chore name and assignee.");DB.chores.push({id:Date.now(),name,assignee:asgn,done:false});saveDB();el("chore-name").value="";renderChores();}
+function toggleChore(id){const c=DB.chores.find(x=>x.id===id);if(c)c.done=!c.done;saveDB();renderChores();}
+function deleteChore(id){DB.chores=DB.chores.filter(x=>x.id!==id);saveDB();renderChores();}
 function renderChores(){
   const l=el("chores-list");
-  if(!DB.chores.length){ l.innerHTML='<div class="empty">No chores yet</div>'; return; }
-  l.innerHTML=DB.chores.map(c=>{
-    const u=DB.users.find(x=>x.id===c.assignee)||{name:c.assignee,colorIdx:0};
-    const col=getColor(u.colorIdx||0);
-    return `<div class="list-item" style="opacity:${c.done?.7:1}">
-      <input type="checkbox" ${c.done?"checked":""} onchange="toggleChore(${c.id})" style="width:17px;height:17px;cursor:pointer;accent-color:#534AB7"/>
-      <span class="name" style="text-decoration:${c.done?"line-through":"none"};color:${c.done?"#aaa":"inherit"}">${c.name}</span>
-      ${badge(u.name,col)}
-      <button class="btn btn-danger btn-sm" onclick="deleteChore(${c.id})">✕</button>
-    </div>`;
-  }).join("");
+  if(!DB.chores.length){l.innerHTML='<div class="empty">No chores yet</div>';return;}
+  l.innerHTML=DB.chores.map(c=>{const u=DB.users.find(x=>x.id===c.assignee)||{name:c.assignee,colorIdx:0};const col=getColor(u.colorIdx||0);return `<div class="list-item" style="opacity:${c.done?.7:1}"><input type="checkbox" ${c.done?"checked":""} onchange="toggleChore(${c.id})" style="width:17px;height:17px;cursor:pointer;accent-color:#534AB7"/><span style="flex:1;text-decoration:${c.done?"line-through":"none"};color:${c.done?"#aaa":"inherit"}">${c.name}</span>${badge(u.name,col)}<button class="btn btn-danger btn-sm" onclick="deleteChore(${c.id})">✕</button></div>`;}).join("");
 }
 
-// ── EXPENSES ──────────────────────────────────────────────────
+// EXPENSES
 function addExpense(){
-  const desc=el("exp-desc").value.trim(); const amount=parseFloat(el("exp-amount").value); const paidBy=el("exp-paidby").value;
+  const desc=el("exp-desc").value.trim();const amount=parseFloat(el("exp-amount").value);const paidBy=el("exp-paidby").value;
   if(!desc||!amount||!paidBy)return alert("Fill in all expense fields.");
   const selected=[...el("exp-split-tags").querySelectorAll(".tag.active")].map(t=>t.dataset.uid);
   const split=selected.length?selected:DB.users.map(u=>u.id);
   const share=+(amount/split.length).toFixed(2);
   const owes=split.filter(id=>id!==paidBy).map(id=>({from:id,to:paidBy,amount:share,settled:false}));
   DB.expenses.push({id:Date.now(),desc,amount,paidBy,split,owes,date:new Date().toLocaleDateString()});
-  saveDB(); el("exp-desc").value=""; el("exp-amount").value=""; el("exp-paidby").value="";
-  el("exp-split-tags").querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));
-  renderExpenses();
+  saveDB();el("exp-desc").value="";el("exp-amount").value="";el("exp-paidby").value="";
+  el("exp-split-tags").querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));renderExpenses();
 }
-function settleOwed(expId,fromId){ const exp=DB.expenses.find(x=>x.id===expId); if(exp){ const o=exp.owes.find(x=>x.from===fromId); if(o)o.settled=true; } saveDB(); renderExpenses(); }
-function deleteExp(id){ DB.expenses=DB.expenses.filter(x=>x.id!==id); saveDB(); renderExpenses(); }
-function netBalances(){
-  const bal={};
-  DB.users.forEach(u=>bal[u.id]=0);
-  DB.expenses.forEach(exp=>{ exp.owes.filter(o=>!o.settled).forEach(o=>{ bal[o.from]=(bal[o.from]||0)-o.amount; bal[o.to]=(bal[o.to]||0)+o.amount; }); });
-  return bal;
-}
+function settleOwed(expId,fromId){const exp=DB.expenses.find(x=>x.id===expId);if(exp){const o=exp.owes.find(x=>x.from===fromId);if(o)o.settled=true;}saveDB();renderExpenses();}
+function deleteExp(id){DB.expenses=DB.expenses.filter(x=>x.id!==id);saveDB();renderExpenses();}
+function netBalances(){const bal={};DB.users.forEach(u=>bal[u.id]=0);DB.expenses.forEach(exp=>{exp.owes.filter(o=>!o.settled).forEach(o=>{bal[o.from]=(bal[o.from]||0)-o.amount;bal[o.to]=(bal[o.to]||0)+o.amount;});});return bal;}
 function renderExpenses(){
   const bal=netBalances();
-  el("balances-list").innerHTML=DB.users.map(u=>{ const b=bal[u.id]||0; const col=getColor(u.colorIdx||0); return `<div class="balance-row">${badge(u.name,col)}<span class="${b>=0?"balance-pos":"balance-neg"}">${b>=0?"+":""}$${b.toFixed(2)}</span></div>`; }).join("");
+  el("balances-list").innerHTML=DB.users.map(u=>{const b=bal[u.id]||0;const col=getColor(u.colorIdx||0);return `<div class="balance-row">${badge(u.name,col)}<span class="${b>=0?"balance-pos":"balance-neg"}">${b>=0?"+":""}$${b.toFixed(2)}</span></div>`;}).join("");
   const l=el("expenses-list");
-  if(!DB.expenses.length){ l.innerHTML='<div class="empty">No expenses yet</div>'; return; }
+  if(!DB.expenses.length){l.innerHTML='<div class="empty">No expenses yet</div>';return;}
   l.innerHTML=DB.expenses.map(exp=>{
-    const pu=DB.users.find(x=>x.id===exp.paidBy)||{name:exp.paidBy,colorIdx:0};
-    const pcol=getColor(pu.colorIdx||0);
-    const owesHtml=exp.owes.filter(o=>!o.settled).map(o=>{ const fu=DB.users.find(x=>x.id===o.from)||{name:o.from,colorIdx:0}; const tu=DB.users.find(x=>x.id===o.to)||{name:o.to,colorIdx:0}; return `<div style="display:flex;align-items:center;gap:7px;padding:5px 0">${badge(fu.name,getColor(fu.colorIdx||0))}<span style="font-size:12px;color:#888">owes $${o.amount.toFixed(2)} to</span>${badge(tu.name,getColor(tu.colorIdx||0))}<button class="btn btn-green btn-sm" style="margin-left:auto" onclick="settleOwed(${exp.id},'${o.from}')">Settle ✓</button></div>`; }).join("");
+    const pu=DB.users.find(x=>x.id===exp.paidBy)||{name:exp.paidBy,colorIdx:0};const pcol=getColor(pu.colorIdx||0);
+    const owesHtml=exp.owes.filter(o=>!o.settled).map(o=>{const fu=DB.users.find(x=>x.id===o.from)||{name:o.from,colorIdx:0};const tu=DB.users.find(x=>x.id===o.to)||{name:o.to,colorIdx:0};return `<div style="display:flex;align-items:center;gap:7px;padding:5px 0">${badge(fu.name,getColor(fu.colorIdx||0))}<span style="font-size:12px;color:#888">owes $${o.amount.toFixed(2)} to</span>${badge(tu.name,getColor(tu.colorIdx||0))}<button class="btn btn-green btn-sm" style="margin-left:auto" onclick="settleOwed(${exp.id},'${o.from}')">Settle ✓</button></div>`;}).join("");
     const allSettled=exp.owes.every(o=>o.settled);
     return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:600;font-size:14px">${exp.desc}</div><div style="font-size:12px;color:#888;margin-top:2px">${exp.date} · paid by ${badge(pu.name,pcol)}</div></div><div style="display:flex;gap:6px;align-items:center"><span style="font-weight:600;font-size:15px">$${exp.amount.toFixed(2)}</span><button class="btn btn-danger btn-sm" onclick="deleteExp(${exp.id})">✕</button></div></div>${owesHtml?`<div style="margin-top:10px;border-top:1px solid #f0f0f8;padding-top:8px">${owesHtml}</div>`:""}${allSettled?`<div style="margin-top:6px;font-size:12px;color:#0d6e43">✓ All settled</div>`:""}</div>`;
   }).join("");
 }
 
-// ── ESSENTIALS ────────────────────────────────────────────────
-function logEssential(){
-  const item=el("ess-item").value; const buyer=el("ess-buyer").value; const date=el("ess-date").value; const phone=el("ess-phone").value.trim();
-  if(!buyer||!date)return alert("Select who bought it and the date.");
-  DB.essentials.unshift({id:Date.now(),item,buyer,date,phone});
-  saveDB(); el("ess-buyer").value=""; el("ess-date").value=""; el("ess-phone").value=""; renderEssentials();
-}
-function sendWA(id){ const entry=DB.essentials.find(x=>x.id===id); if(!entry)return; const ess=ESSENTIALS_LIST.find(e=>e.key===entry.item); const u=DB.users.find(x=>x.id===entry.buyer)||{name:entry.buyer}; const msg=encodeURIComponent(`${ess?.icon||"📦"} *Roommate Hub Reminder*\n\nHey! *${u.name}* last bought *${entry.item}* on *${fmtDate(entry.date)}*.\n\nTime to restock soon! 🏠`); const ph=entry.phone?entry.phone.replace(/\D/g,""):""; window.open(ph?`https://wa.me/${ph}?text=${msg}`:`https://wa.me/?text=${msg}`,"_blank"); }
-function deleteEss(id){ DB.essentials=DB.essentials.filter(x=>x.id!==id); saveDB(); renderEssentials(); }
+// ESSENTIALS
+function logEssential(){const item=el("ess-item").value;const buyer=el("ess-buyer").value;const date=el("ess-date").value;const phone=el("ess-phone").value.trim();if(!buyer||!date)return alert("Select who bought it and the date.");DB.essentials.unshift({id:Date.now(),item,buyer,date,phone});saveDB();el("ess-buyer").value="";el("ess-date").value="";el("ess-phone").value="";renderEssentials();}
+function sendWA(id){const entry=DB.essentials.find(x=>x.id===id);if(!entry)return;const ess=ESSENTIALS_LIST.find(e=>e.key===entry.item);const u=DB.users.find(x=>x.id===entry.buyer)||{name:entry.buyer};const msg=encodeURIComponent(`${ess?.icon||"📦"} *Roommate Hub Reminder*\n\nHey! *${u.name}* last bought *${entry.item}* on *${fmtDate(entry.date)}*.\n\nTime to restock soon! 🏠`);const ph=entry.phone?entry.phone.replace(/\D/g,""):"";window.open(ph?`https://wa.me/${ph}?text=${msg}`:`https://wa.me/?text=${msg}`,"_blank");}
+function deleteEss(id){DB.essentials=DB.essentials.filter(x=>x.id!==id);saveDB();renderEssentials();}
 function renderEssentials(){
-  el("ess-last").innerHTML=ESSENTIALS_LIST.map(ess=>{
-    const last=DB.essentials.find(g=>g.item===ess.key);
-    if(!last) return `<div class="ess-item" style="opacity:.5"><div class="ess-icon" style="background:#f0f0f8">${ess.icon}</div><div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">Not logged yet</div></div></div>`;
-    const u=DB.users.find(x=>x.id===last.buyer)||{name:last.buyer,colorIdx:0}; const col=getColor(u.colorIdx||0);
-    return `<div class="ess-item"><div class="ess-icon" style="background:${col.bg}">${ess.icon}</div><div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">${fmtDate(last.date)}</div></div>${badge(u.name,col)}<button class="btn-wa" onclick="sendWA(${last.id})" title="WhatsApp reminder">📲</button></div>`;
-  }).join("");
-  const hw=el("ess-history-wrap");
-  if(!DB.essentials.length){ hw.style.display="none"; return; }
-  hw.style.display="block";
-  el("ess-history").innerHTML=DB.essentials.map(g=>{ const ess=ESSENTIALS_LIST.find(e=>e.key===g.item); const u=DB.users.find(x=>x.id===g.buyer)||{name:g.buyer,colorIdx:0}; const col=getColor(u.colorIdx||0); return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0f8"><span style="font-size:16px">${ess?.icon||"📦"}</span><span style="font-size:13px;font-weight:500;flex:1">${g.item}</span>${badge(u.name,col)}<span style="font-size:12px;color:#888">${fmtDate(g.date)}</span><button class="btn-wa" style="padding:4px 8px;font-size:12px" onclick="sendWA(${g.id})">📲</button><button class="btn btn-danger btn-sm" onclick="deleteEss(${g.id})">✕</button></div>`; }).join("");
+  el("ess-last").innerHTML=ESSENTIALS_LIST.map(ess=>{const last=DB.essentials.find(g=>g.item===ess.key);if(!last)return `<div class="ess-item" style="opacity:.5"><div class="ess-icon" style="background:#f0f0f8">${ess.icon}</div><div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">Not logged yet</div></div></div>`;const u=DB.users.find(x=>x.id===last.buyer)||{name:last.buyer,colorIdx:0};const col=getColor(u.colorIdx||0);return `<div class="ess-item"><div class="ess-icon" style="background:${col.bg}">${ess.icon}</div><div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">${fmtDate(last.date)}</div></div>${badge(u.name,col)}<button class="btn-wa" onclick="sendWA(${last.id})">📲</button></div>`;}).join("");
+  const hw=el("ess-history-wrap");if(!DB.essentials.length){hw.style.display="none";return;}hw.style.display="block";
+  el("ess-history").innerHTML=DB.essentials.map(g=>{const ess=ESSENTIALS_LIST.find(e=>e.key===g.item);const u=DB.users.find(x=>x.id===g.buyer)||{name:g.buyer,colorIdx:0};const col=getColor(u.colorIdx||0);return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0f8"><span style="font-size:16px">${ess?.icon||"📦"}</span><span style="font-size:13px;font-weight:500;flex:1">${g.item}</span>${badge(u.name,col)}<span style="font-size:12px;color:#888">${fmtDate(g.date)}</span><button class="btn-wa" style="padding:4px 8px;font-size:12px" onclick="sendWA(${g.id})">📲</button><button class="btn btn-danger btn-sm" onclick="deleteEss(${g.id})">✕</button></div>`;}).join("");
 }
 
-// ── NOTICEBOARD ───────────────────────────────────────────────
-function postNotice(){ const text=el("notice-text").value.trim(); if(!text)return; DB.notices.unshift({id:Date.now(),text,author:currentUser.id,date:new Date().toLocaleDateString()}); saveDB(); el("notice-text").value=""; renderNotices(); }
-function deleteNotice(id){ if(currentUser.role!=="admin"){ const n=DB.notices.find(x=>x.id===id); if(!n||n.author!==currentUser.id)return alert("You can only delete your own posts."); } DB.notices=DB.notices.filter(x=>x.id!==id); saveDB(); renderNotices(); }
+// NOTICEBOARD
+function postNotice(){const text=el("notice-text").value.trim();if(!text)return;DB.notices.unshift({id:Date.now(),text,author:currentUser.id,date:new Date().toLocaleDateString()});saveDB();el("notice-text").value="";renderNotices();}
+function deleteNotice(id){if(currentUser.role!=="admin"){const n=DB.notices.find(x=>x.id===id);if(!n||n.author!==currentUser.id)return alert("You can only delete your own posts.");}DB.notices=DB.notices.filter(x=>x.id!==id);saveDB();renderNotices();}
 function renderNotices(){
-  const l=el("notices-list");
-  if(!DB.notices.length){ l.innerHTML='<div class="empty">No announcements yet</div>'; return; }
-  l.innerHTML=DB.notices.map(n=>{ const u=DB.users.find(x=>x.id===n.author)||{name:"Unknown",colorIdx:0}; const col=getColor(u.colorIdx||0); const canDel=currentUser.role==="admin"||n.author===currentUser.id; return `<div class="notice-card"><div class="notice-meta">${avatar(u.name,col,true)}<span style="font-weight:600;font-size:13px">${u.name}</span><span style="font-size:12px;color:#aaa;margin-left:auto">${n.date}</span>${canDel?`<button class="btn btn-danger btn-sm" onclick="deleteNotice(${n.id})">✕</button>`:""}</div><div class="notice-text">${n.text}</div></div>`; }).join("");
+  const l=el("notices-list");if(!DB.notices.length){l.innerHTML='<div class="empty">No announcements yet</div>';return;}
+  l.innerHTML=DB.notices.map(n=>{const u=DB.users.find(x=>x.id===n.author)||{name:"Unknown",colorIdx:0};const col=getColor(u.colorIdx||0);const canDel=currentUser.role==="admin"||n.author===currentUser.id;return `<div class="notice-card"><div class="notice-meta">${avatar(u.name,col,true)}<span style="font-weight:600;font-size:13px">${u.name}</span><span style="font-size:12px;color:#aaa;margin-left:auto">${n.date}</span>${canDel?`<button class="btn btn-danger btn-sm" onclick="deleteNotice(${n.id})">✕</button>`:""}</div><div class="notice-text">${n.text}</div></div>`;}).join("");
 }
 
-// ── AI ────────────────────────────────────────────────────────
-function setAiQ(e){ el("ai-query").value=e.textContent; }
+// ── VACATION ──────────────────────────────────────────────────
+function calcVacBalance(user){
+  if(!user.joinDate)return{earned:0,used:0,balance:0,months:0};
+  const join=new Date(user.joinDate);const today=new Date();
+  const months=Math.max(0,(today.getFullYear()-join.getFullYear())*12+(today.getMonth()-join.getMonth()));
+  const earned=+(months/12*VACATION_DAYS_PER_YEAR).toFixed(1);
+  const used=(user.vacations||[]).reduce((s,v)=>{
+    const start=new Date(v.start);const end=new Date(v.end);
+    const days=Math.round((end-start)/(1000*60*60*24));
+    return s+Math.max(0,days);
+  },0);
+  return{earned,used,balance:+(earned-used).toFixed(1),months};
+}
+
+function renderVacation(){
+  const c=el("vac-content");
+  const isAdmin=currentUser.role==="admin";
+  // for regular user show their own; for admin show all
+  const usersToShow=isAdmin?DB.users:[currentUser];
+  let html="";
+
+  usersToShow.forEach(u=>{
+    const col=getColor(u.colorIdx||0);
+    const bal=calcVacBalance(u);
+    const pct=Math.min(100,bal.earned>0?Math.round(bal.used/bal.earned*100):0);
+    const barClass=pct>80?"danger":pct>50?"warn":"";
+    // last vacation & resumption
+    const sorted=(u.vacations||[]).slice().sort((a,b)=>new Date(b.end)-new Date(a.end));
+    const lastVac=sorted[0]||null;
+    const today=new Date();today.setHours(0,0,0,0);
+    const onVac=lastVac&&new Date(lastVac.end)>today&&new Date(lastVac.start)<=today;
+    const resumption=lastVac?fmtDate(lastVac.end):"—";
+
+    html+=`<div class="vac-card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        ${avatar(u.name,col)}
+        <div style="flex:1">
+          <div style="font-weight:600;font-size:15px">${u.name}</div>
+          <div style="font-size:12px;color:#888">Joined: ${u.joinDate?fmtDate(u.joinDate):"Not set"}</div>
+        </div>
+        ${onVac?`<span style="background:#FAEEDA;color:#633806;border:1px solid #854F0B;border-radius:99px;padding:3px 10px;font-size:12px">🏖️ On vacation</span>`:""}
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div class="vac-stat" style="background:#E1F5EE"><div class="num" style="color:#0F6E56">${bal.earned}</div><div class="lbl">Days earned</div></div>
+        <div class="vac-stat" style="background:#FAECE7"><div class="num" style="color:#993C1D">${bal.used}</div><div class="lbl">Days used</div></div>
+        <div class="vac-stat" style="background:#EEEDFE"><div class="num" style="color:#534AB7">${bal.balance}</div><div class="lbl">Balance</div></div>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar ${barClass}" style="width:${pct}%"></div></div>
+      <div style="font-size:11px;color:#888;margin-top:4px;margin-bottom:12px">${pct}% of earned days used · Based on ${bal.months} months service</div>
+      ${lastVac?`<div style="font-size:13px;color:#555;margin-bottom:10px">Last vacation: <strong>${fmtDate(lastVac.start)}</strong> → <strong>${fmtDate(lastVac.end)}</strong> &nbsp;|&nbsp; Resumption: <strong>${resumption}</strong></div>`:""}
+      ${(u.vacations||[]).length>0?`<div style="margin-bottom:10px">${sorted.map(v=>{const days=Math.round((new Date(v.end)-new Date(v.start))/(1000*60*60*24));return `<div class="vac-row"><span style="font-size:13px;flex:1">${fmtDate(v.start)} → ${fmtDate(v.end)}</span><span style="font-size:12px;color:#534AB7;font-weight:500">${days}d</span>${isAdmin||u.id===currentUser.id?`<button class="btn btn-danger btn-sm" onclick="deleteVac('${u.id}',${v.id})">✕</button>`:""}</div>`;}).join("")}</div>`:""}
+      <button class="btn btn-primary" style="width:100%" onclick="openLogVac('${u.id}')">+ Log vacation</button>
+      ${isAdmin&&!u.joinDate?`<div style="margin-top:8px"><div class="section-label">Set join date</div><div style="display:flex;gap:8px"><input class="inp" type="date" id="jd-${u.id}"/><button class="btn btn-primary" onclick="setJoinDate('${u.id}')">Save</button></div></div>`:""}
+      ${isAdmin&&u.joinDate?`<div style="margin-top:8px;font-size:12px;color:#aaa">Join date: ${fmtDate(u.joinDate)} <button class="btn btn-sm" style="font-size:11px" onclick="editJoinDate('${u.id}')">Edit</button></div>`:""}
+    </div>`;
+  });
+  c.innerHTML=html||'<div class="empty">No users found</div>';
+}
+
+function openLogVac(uid){vacTargetId=uid;el("vac-start").value="";el("vac-end").value="";el("vac-modal-err").textContent="";el("modal-vac").style.display="flex";}
+function confirmLogVac(){
+  const start=el("vac-start").value;const end=el("vac-end").value;
+  if(!start||!end){el("vac-modal-err").textContent="Select both dates.";return;}
+  if(new Date(end)<=new Date(start)){el("vac-modal-err").textContent="End date must be after start date.";return;}
+  const u=DB.users.find(x=>x.id===vacTargetId);if(!u)return;
+  if(!u.vacations)u.vacations=[];
+  u.vacations.push({id:Date.now(),start,end});
+  saveDB();closeModal("modal-vac");renderVacation();
+}
+function deleteVac(uid,vid){
+  const u=DB.users.find(x=>x.id===uid);if(!u)return;
+  u.vacations=(u.vacations||[]).filter(v=>v.id!==vid);
+  saveDB();renderVacation();
+}
+function setJoinDate(uid){
+  const d=el("jd-"+uid)?.value;if(!d)return alert("Pick a date.");
+  const u=DB.users.find(x=>x.id===uid);if(u)u.joinDate=d;
+  saveDB();renderVacation();
+}
+function editJoinDate(uid){
+  const u=DB.users.find(x=>x.id===uid);if(!u)return;
+  const d=prompt("Enter new join date (YYYY-MM-DD):",u.joinDate||"");
+  if(d){u.joinDate=d;saveDB();renderVacation();}
+}
+
+// ── DIGI WALLET ───────────────────────────────────────────────
+const DOC_TYPES=["National ID (Front)","National ID (Back)","Passport (Photo Page)","Passport (Visa Page)","Residence Permit","Driving License","Other"];
+
+function renderWallet(){
+  const c=el("wallet-content");
+  const isAdmin=currentUser.role==="admin";
+  const usersToShow=isAdmin?DB.users:[currentUser];
+  let html=`<div class="card" style="background:linear-gradient(135deg,#EEEDFE,#E6F1FB);border-color:#AFA9EC;margin-bottom:16px">
+    <div style="font-weight:600;color:#3C3489;font-size:15px;margin-bottom:4px">💳 DIGI Wallet</div>
+    <div style="font-size:13px;color:#534AB7">Securely store ID and passport images. Only you ${isAdmin?"and admins ":""}can see your documents.</div>
+  </div>`;
+
+  usersToShow.forEach(u=>{
+    const col=getColor(u.colorIdx||0);
+    const wallet=u.wallet||{};
+    const docCount=Object.keys(wallet).length;
+    html+=`<div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        ${avatar(u.name,col)}
+        <div style="flex:1"><div style="font-weight:600;font-size:15px">${u.name}</div>
+        <div style="font-size:12px;color:#888">${docCount} document${docCount!==1?"s":""} stored</div></div>
+      </div>
+      <div class="wallet-section">`;
+
+    DOC_TYPES.forEach(dtype=>{
+      const key=dtype.replace(/\s+/g,"_");
+      const img=wallet[key]||null;
+      html+=`<div class="doc-card">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:14px;flex:1;font-weight:500">${dtype}</span>
+          ${img?`<img src="${img}" class="doc-img-thumb" onclick="previewImg('${key}','${u.id}')" alt="${dtype}"/>`:""}
+          <label class="btn btn-sm btn-primary" style="cursor:pointer;margin:0">${img?"Replace":"Upload"}
+            <input type="file" accept="image/*" style="display:none" onchange="uploadDoc(event,'${u.id}','${key}')"/>
+          </label>
+          ${img?`<button class="btn btn-danger btn-sm" onclick="deleteDoc('${u.id}','${key}')">✕</button>`:""}
+        </div>
+        ${img?`<img src="${img}" class="doc-img" onclick="previewImg('${key}','${u.id}')" alt="${dtype}"/>`:""}
+      </div>`;
+    });
+
+    html+=`</div></div>`;
+  });
+
+  c.innerHTML=html;
+}
+
+function uploadDoc(event,uid,key){
+  const file=event.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const u=DB.users.find(x=>x.id===uid);if(!u)return;
+    if(!u.wallet)u.wallet={};
+    u.wallet[key]=e.target.result;
+    saveDB();renderWallet();
+  };
+  reader.readAsDataURL(file);
+}
+
+function deleteDoc(uid,key){
+  if(!confirm("Delete this document?"))return;
+  const u=DB.users.find(x=>x.id===uid);if(!u)return;
+  if(u.wallet)delete u.wallet[key];
+  saveDB();renderWallet();
+}
+
+function previewImg(key,uid){
+  const u=DB.users.find(x=>x.id===uid);if(!u)return;
+  const img=u.wallet?.[key];if(!img)return;
+  el("img-preview-el").src=img;
+  el("img-preview-bg").style.display="flex";
+}
+function closeImgPreview(){el("img-preview-bg").style.display="none";}
+
+// AI
+function setAiQ(e){el("ai-query").value=e.textContent;}
 async function askAI(){
-  const q=el("ai-query").value.trim(); if(!q)return;
-  const btn=el("ai-btn"); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Thinking...';
+  const q=el("ai-query").value.trim();if(!q)return;
+  const btn=el("ai-btn");btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Thinking...';
   el("ai-response").innerHTML="";
-  const ctx=`Roommates: ${DB.users.map(u=>u.name).join(", ")}. Chores: ${DB.chores.map(c=>{ const u=DB.users.find(x=>x.id===c.assignee); return`${c.name}→${u?.name||c.assignee}(${c.done?"done":"pending"})`; }).join("; ")}. Expenses: ${DB.expenses.map(e=>{ const u=DB.users.find(x=>x.id===e.paidBy); return`${e.desc} $${e.amount} paid by ${u?.name||e.paidBy}`; }).join("; ")}.`;
+  const ctx=`Roommates: ${DB.users.map(u=>u.name).join(", ")}. Chores: ${DB.chores.map(c=>{const u=DB.users.find(x=>x.id===c.assignee);return`${c.name}→${u?.name||c.assignee}(${c.done?"done":"pending"})`;}).join("; ")}. Expenses: ${DB.expenses.map(e=>{const u=DB.users.find(x=>x.id===e.paidBy);return`${e.desc} $${e.amount} paid by ${u?.name||e.paidBy}`;}).join("; ")}.`;
   try{
     const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:`You are a fair friendly house mediator. Be concise and practical. Context: ${ctx}`,messages:[{role:"user",content:q}]})});
     const data=await res.json();
     el("ai-response").innerHTML=`<div class="ai-response">${(data.content?.[0]?.text||"No response.").replace(/\n/g,"<br>")}</div>`;
-  }catch(e){ el("ai-response").innerHTML=`<div class="ai-response" style="color:#c0392b">Something went wrong. Please try again.</div>`; }
-  btn.disabled=false; btn.textContent="Ask AI";
+  }catch(e){el("ai-response").innerHTML=`<div class="ai-response" style="color:#c0392b">Something went wrong.</div>`;}
+  btn.disabled=false;btn.textContent="Ask AI";
 }
 
-// ── ADMIN ─────────────────────────────────────────────────────
+// ADMIN
 function adminAddUser(){
-  const name=el("new-user-name").value.trim(); const pass=el("new-user-pass").value; const role=el("new-user-role").value;
+  const name=el("new-user-name").value.trim();const pass=el("new-user-pass").value;const role=el("new-user-role").value;const joinDate=el("new-user-join").value;
   if(!name||!pass)return alert("Enter name and password.");
   const id=name.toLowerCase().replace(/\s+/g,"_")+"_"+Date.now();
-  DB.users.push({id,name,password:pass,role,colorIdx:DB.users.length%COLORS.length});
-  saveDB(); el("new-user-name").value=""; el("new-user-pass").value="";
-  populateSelects(); renderAdmin();
+  DB.users.push({id,name,password:pass,role,colorIdx:DB.users.length%COLORS.length,joinDate,vacations:[],wallet:{}});
+  saveDB();el("new-user-name").value="";el("new-user-pass").value="";el("new-user-join").value="";
+  populateSelects();renderAdmin();
 }
-function adminDeleteUser(id){ if(id===currentUser.id)return alert("You cannot delete your own account."); if(!confirm("Delete this user?"))return; DB.users=DB.users.filter(x=>x.id!==id); saveDB(); populateSelects(); renderAdmin(); }
-function openReset(id){ resetTargetId=id; el("reset-pass").value=""; el("reset-pass2").value=""; el("reset-err").textContent=""; el("modal-reset").style.display="flex"; }
-function closeModal(){ el("modal-reset").style.display="none"; resetTargetId=null; }
-function confirmReset(){ const p=el("reset-pass").value; const p2=el("reset-pass2").value; if(!p){ el("reset-err").textContent="Enter a password."; return; } if(p!==p2){ el("reset-err").textContent="Passwords don't match."; return; } const u=DB.users.find(x=>x.id===resetTargetId); if(u)u.password=p; saveDB(); closeModal(); renderAdmin(); alert("Password updated!"); }
+function adminDeleteUser(id){if(id===currentUser.id)return alert("You cannot delete your own account.");if(!confirm("Delete this user?"))return;DB.users=DB.users.filter(x=>x.id!==id);saveDB();populateSelects();renderAdmin();}
+function openReset(id){resetTargetId=id;el("reset-pass").value="";el("reset-pass2").value="";el("reset-err").textContent="";el("modal-reset").style.display="flex";}
+function closeModal(id){el(id).style.display="none";resetTargetId=null;vacTargetId=null;}
+function confirmReset(){const p=el("reset-pass").value;const p2=el("reset-pass2").value;if(!p){el("reset-err").textContent="Enter a password.";return;}if(p!==p2){el("reset-err").textContent="Passwords don't match.";return;}const u=DB.users.find(x=>x.id===resetTargetId);if(u)u.password=p;saveDB();closeModal("modal-reset");renderAdmin();alert("Password updated!");}
 function renderAdmin(){
-  el("admin-users-list").innerHTML=DB.users.map(u=>{ const col=getColor(u.colorIdx||0); const isSelf=u.id===currentUser.id; return `<div class="admin-user-row">${avatar(u.name,col,true)}<span style="font-size:14px;font-weight:500;flex:1">${u.name}</span><span class="admin-badge ${u.role==="admin"?"":"user"}">${u.role==="admin"?"Admin":"User"}</span><button class="btn btn-sm" style="background:#f0f0ff;color:#534AB7;border-color:#AFA9EC" onclick="openReset('${u.id}')">Reset pw</button>${!isSelf?`<button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}')">Delete</button>`:`<span style="font-size:12px;color:#aaa">(you)</span>`}</div>`; }).join("");
+  el("admin-users-list").innerHTML=DB.users.map(u=>{
+    const col=getColor(u.colorIdx||0);const isSelf=u.id===currentUser.id;
+    return `<div class="admin-user-row">${avatar(u.name,col,true)}<div style="flex:1"><div style="font-size:14px;font-weight:500">${u.name}</div><div style="font-size:11px;color:#aaa">Joined: ${u.joinDate?fmtDate(u.joinDate):"Not set"}</div></div><span class="admin-badge ${u.role==="admin"?"":"user"}">${u.role==="admin"?"Admin":"User"}</span><button class="btn btn-sm" style="background:#f0f0ff;color:#534AB7;border-color:#AFA9EC" onclick="openReset('${u.id}')">Reset pw</button>${!isSelf?`<button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}')">Delete</button>`:`<span style="font-size:12px;color:#aaa">(you)</span>`}</div>`;
+  }).join("");
 }
 </script>
 </body>

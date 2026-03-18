@@ -10,118 +10,99 @@
 <link rel="manifest" href="manifest.json"/>
 <title>Roommate Hub</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4ff;min-height:100vh;color:#1a1a2e}
-  input,select,textarea,button{font-family:inherit;font-size:14px}
-  .screen{display:none}.screen.active{display:block}
-
-  /* LOGIN */
-  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
-  .login-card{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:360px;box-shadow:0 4px 24px rgba(83,74,183,.12)}
-  .login-logo{text-align:center;margin-bottom:1.5rem}
-  .login-logo .icon{font-size:48px}
-  .login-logo h1{font-size:22px;font-weight:600;color:#534AB7;margin-top:8px}
-  .login-logo p{font-size:13px;color:#888;margin-top:4px}
-  .form-group{margin-bottom:1rem}
-  .form-group label{display:block;font-size:12px;font-weight:500;color:#555;margin-bottom:5px}
-  .form-group input{width:100%;padding:10px 12px;border:1.5px solid #e0e0f0;border-radius:10px;font-size:14px;outline:none;transition:border .2s}
-  .form-group input:focus{border-color:#534AB7}
-  .btn-login{width:100%;padding:12px;background:#534AB7;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:.5rem}
-  .btn-login:active{opacity:.85}
-  .login-error{color:#c0392b;font-size:13px;text-align:center;margin-top:.5rem;min-height:18px}
-
-  /* APP SHELL */
-  .app-wrap{max-width:600px;margin:0 auto;padding-bottom:80px}
-  .topbar{background:#534AB7;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
-  .topbar-title{font-size:17px;font-weight:600;flex:1}
-  .topbar-user{font-size:12px;background:rgba(255,255,255,.2);padding:4px 10px;border-radius:99px}
-  .topbar-logout{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;padding:4px 10px;border-radius:8px;font-size:12px;cursor:pointer}
-  .tabs-wrap{background:#fff;border-bottom:1px solid #eee;padding:0 12px;overflow-x:auto;white-space:nowrap;position:sticky;top:50px;z-index:99}
-  .tabs-wrap::-webkit-scrollbar{display:none}
-  .tab-btn{display:inline-block;padding:12px 14px;font-size:13px;font-weight:500;color:#888;border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent}
-  .tab-btn.active{color:#534AB7;border-bottom-color:#534AB7}
-  .tab-content{display:none;padding:16px}.tab-content.active{display:block}
-
-  /* CARDS */
-  .card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #eef}
-  .card-title{font-size:13px;font-weight:600;margin-bottom:10px;color:#444}
-  .section-label{font-size:12px;color:#888;margin-bottom:6px}
-
-  /* FORM ELEMENTS */
-  .inp{width:100%;padding:9px 11px;border:1.5px solid #e0e0f0;border-radius:9px;font-size:13px;outline:none;background:#fff;color:#1a1a2e}
-  .inp:focus{border-color:#534AB7}
-  select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
-  .row{display:flex;gap:8px}
-  .row .inp{flex:1}
-
-  /* BUTTONS */
-  .btn{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#333}
-  .btn:active{opacity:.8}
-  .btn-primary{background:#534AB7;color:#fff;border-color:#534AB7}
-  .btn-danger{background:#fff5f5;color:#c0392b;border-color:#f5c6c6}
-  .btn-green{background:#e8faf2;color:#0d6e43;border-color:#a8e6c8}
-  .btn-wa{background:#25D366;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;cursor:pointer}
-  .btn-full{width:100%;padding:11px;margin-top:8px}
-  .btn-sm{padding:4px 10px;font-size:12px}
-
-  /* BADGE / AVATAR */
-  .badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:500}
-  .avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0}
-  .avatar-sm{width:26px;height:26px;font-size:11px}
-
-  /* LIST ITEMS */
-  .list-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eef;border-radius:10px;background:#fff;margin-bottom:8px}
-  .list-item .name{flex:1;font-size:14px}
-  .list-item .sub{font-size:12px;color:#888}
-
-  /* NOTICE */
-  .notice-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #eef}
-  .notice-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-  .notice-text{font-size:14px;line-height:1.6;color:#333}
-
-  /* BALANCE */
-  .balance-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f8}
-  .balance-pos{color:#0d6e43;font-weight:600}
-  .balance-neg{color:#c0392b;font-weight:600}
-
-  /* ESSENTIALS */
-  .ess-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eef;border-radius:10px;background:#fff;margin-bottom:8px}
-  .ess-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .ess-info{flex:1}
-  .ess-name{font-size:14px;font-weight:500}
-  .ess-date{font-size:12px;color:#888}
-
-  /* AI */
-  .ai-banner{background:linear-gradient(135deg,#EEEDFE,#E1F5EE);border:1px solid #AFA9EC;border-radius:12px;padding:14px;margin-bottom:12px}
-  .ai-response{border-left:3px solid #534AB7;padding:12px 14px;background:#fff;border-radius:0 10px 10px 0;font-size:14px;line-height:1.7;white-space:pre-wrap;margin-top:10px}
-  .chip{display:inline-block;padding:5px 12px;border-radius:99px;font-size:12px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC;margin:3px;cursor:pointer}
-
-  /* ADMIN */
-  .admin-user-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f8}
-  .admin-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC}
-  .admin-badge.user{background:#E1F5EE;color:#085041;border-color:#0F6E56}
-
-  /* EMPTY */
-  .empty{text-align:center;color:#aaa;font-size:13px;padding:2rem 0}
-
-  /* MODAL */
-  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
-  .modal{background:#fff;border-radius:16px;padding:1.5rem;width:100%;max-width:360px}
-  .modal h3{font-size:16px;font-weight:600;margin-bottom:1rem}
-  .modal-actions{display:flex;gap:8px;margin-top:1rem;justify-content:flex-end}
-
-  .spinner{display:inline-block;width:16px;height:16px;border:2px solid #534AB7;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-  .tag{padding:4px 12px;border-radius:99px;font-size:12px;cursor:pointer;border:1.5px solid #ddd;background:#f9f9f9;color:#555}
-  .tag.active{border-color:#534AB7;background:#EEEDFE;color:#3C3489}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f4ff;min-height:100vh;color:#1a1a2e}
+input,select,textarea,button{font-family:inherit;font-size:14px}
+.screen{display:none}.screen.active{display:block}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
+.login-card{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:360px;box-shadow:0 4px 24px rgba(83,74,183,.12)}
+.login-logo{text-align:center;margin-bottom:1.5rem}
+.login-logo .icon{font-size:48px}
+.login-logo h1{font-size:22px;font-weight:600;color:#534AB7;margin-top:8px}
+.login-logo p{font-size:13px;color:#888;margin-top:4px}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:500;color:#555;margin-bottom:5px}
+.form-group input{width:100%;padding:10px 12px;border:1.5px solid #e0e0f0;border-radius:10px;font-size:14px;outline:none;transition:border .2s}
+.form-group input:focus{border-color:#534AB7}
+.btn-login{width:100%;padding:12px;background:#534AB7;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;margin-top:.5rem}
+.btn-login:active{opacity:.85}
+.login-error{color:#c0392b;font-size:13px;text-align:center;margin-top:.5rem;min-height:18px}
+.app-wrap{max-width:600px;margin:0 auto;padding-bottom:80px}
+.topbar{background:#534AB7;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:17px;font-weight:600;flex:1}
+.topbar-user{font-size:12px;background:rgba(255,255,255,.2);padding:4px 10px;border-radius:99px}
+.topbar-logout{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;padding:4px 10px;border-radius:8px;font-size:12px;cursor:pointer}
+.tabs-wrap{background:#fff;border-bottom:1px solid #eee;padding:0 12px;overflow-x:auto;white-space:nowrap;position:sticky;top:50px;z-index:99}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tab-btn{display:inline-block;padding:12px 14px;font-size:13px;font-weight:500;color:#888;border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent}
+.tab-btn.active{color:#534AB7;border-bottom-color:#534AB7}
+.tab-content{display:none;padding:16px}.tab-content.active{display:block}
+.card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #eef}
+.card-title{font-size:13px;font-weight:600;margin-bottom:10px;color:#444}
+.section-label{font-size:12px;color:#888;margin-bottom:6px}
+.inp{width:100%;padding:9px 11px;border:1.5px solid #e0e0f0;border-radius:9px;font-size:13px;outline:none;background:#fff;color:#1a1a2e}
+.inp:focus{border-color:#534AB7}
+select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.row{display:flex;gap:8px}.row .inp{flex:1}
+.btn{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#333}
+.btn:active{opacity:.8}
+.btn-primary{background:#534AB7;color:#fff;border-color:#534AB7}
+.btn-danger{background:#fff5f5;color:#c0392b;border-color:#f5c6c6}
+.btn-green{background:#e8faf2;color:#0d6e43;border-color:#a8e6c8}
+.btn-wa{background:#25D366;color:#fff;border:none;padding:7px 12px;border-radius:8px;font-size:13px;cursor:pointer}
+.btn-full{width:100%;padding:11px;margin-top:8px}
+.btn-sm{padding:4px 10px;font-size:12px}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:500}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0}
+.avatar-sm{width:26px;height:26px;font-size:11px}
+.list-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eef;border-radius:10px;background:#fff;margin-bottom:8px}
+.list-item .name{flex:1;font-size:14px}
+.notice-card{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #eef}
+.notice-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.notice-text{font-size:14px;line-height:1.6;color:#333}
+.balance-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f8}
+.balance-pos{color:#0d6e43;font-weight:600}
+.balance-neg{color:#c0392b;font-weight:600}
+.ess-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eef;border-radius:10px;background:#fff;margin-bottom:8px}
+.ess-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ess-info{flex:1}
+.ess-name{font-size:14px;font-weight:500}
+.ess-date{font-size:12px;color:#888}
+.ai-banner{background:linear-gradient(135deg,#EEEDFE,#E1F5EE);border:1px solid #AFA9EC;border-radius:12px;padding:14px;margin-bottom:12px}
+.ai-response{border-left:3px solid #534AB7;padding:12px 14px;background:#fff;border-radius:0 10px 10px 0;font-size:14px;line-height:1.7;white-space:pre-wrap;margin-top:10px}
+.chip{display:inline-block;padding:5px 12px;border-radius:99px;font-size:12px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC;margin:3px;cursor:pointer}
+.admin-user-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f8}
+.admin-badge{font-size:11px;padding:2px 8px;border-radius:99px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC}
+.admin-badge.user{background:#E1F5EE;color:#085041;border-color:#0F6E56}
+.empty{text-align:center;color:#aaa;font-size:13px;padding:2rem 0}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.modal{background:#fff;border-radius:16px;padding:1.5rem;width:100%;max-width:360px}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:1rem}
+.modal-actions{display:flex;gap:8px;margin-top:1rem;justify-content:flex-end}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #534AB7;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+.spinner-white{border-color:rgba(255,255,255,.5);border-top-color:transparent}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{padding:4px 12px;border-radius:99px;font-size:12px;cursor:pointer;border:1.5px solid #ddd;background:#f9f9f9;color:#555}
+.tag.active{border-color:#534AB7;background:#EEEDFE;color:#3C3489}
+.loading-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.loading-screen .icon{font-size:48px}
+.loading-screen p{color:#534AB7;font-size:15px;font-weight:500}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="screen-login" class="screen active">
+<!-- LOADING -->
+<div id="screen-loading" class="screen active">
+  <div class="loading-screen">
+    <div class="icon">🏠</div>
+    <div class="spinner" style="width:24px;height:24px;border-color:#534AB7;border-top-color:transparent"></div>
+    <p>Loading Roommate Hub...</p>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="screen-login" class="screen">
   <div class="login-wrap">
     <div class="login-card">
       <div class="login-logo">
@@ -143,7 +124,7 @@
   </div>
 </div>
 
-<!-- APP SCREEN -->
+<!-- APP -->
 <div id="screen-app" class="screen">
   <div class="app-wrap">
     <div class="topbar">
@@ -194,7 +175,7 @@
       <div id="expenses-list"></div>
     </div>
 
-    <!-- GAS/ESSENTIALS -->
+    <!-- ESSENTIALS -->
     <div id="tab-essentials" class="tab-content">
       <div class="card">
         <div class="card-title">Log a purchase</div>
@@ -240,13 +221,13 @@
       <div id="notices-list"></div>
     </div>
 
-    <!-- AI RESOLVER -->
+    <!-- AI -->
     <div id="tab-ai" class="tab-content">
       <div class="ai-banner">
         <div style="font-weight:600;color:#3C3489;margin-bottom:4px">AI House Mediator</div>
         <div style="font-size:13px;color:#534AB7">Ask about house rules, resolve disputes, or get fair advice.</div>
       </div>
-      <div id="ai-chips">
+      <div>
         <span class="chip" onclick="setAiQ(this)">Suggest fair chore rotation</span>
         <span class="chip" onclick="setAiQ(this)">Who should buy gas next?</span>
         <span class="chip" onclick="setAiQ(this)">How do we split bills fairly?</span>
@@ -280,7 +261,6 @@
         <div id="admin-users-list"></div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -299,15 +279,15 @@
 </div>
 
 <script>
-// ─── DATA STORE ───────────────────────────────────────────────
-const ESSENTIALS_LIST = [
-  {key:"Gas",icon:"⛽"},
-  {key:"Water filter",icon:"💧"},
-  {key:"Dish wash liquid",icon:"🧴"},
-  {key:"Hand wash",icon:"🖐"},
-  {key:"Room cleaning",icon:"🧹"}
-];
+// ── CONFIG ────────────────────────────────────────────────────
+const BIN_KEY = "$2a$10$veU8LLF/3MHhLryhC0Umcur9/jzg9FzYt8oI9kwT0YdJ0A30W4wTm";
+const BIN_URL_BASE = "https://api.jsonbin.io/v3/b";
+let BIN_ID = localStorage.getItem("rh_bin_id") || null;
 
+const ESSENTIALS_LIST = [
+  {key:"Gas",icon:"⛽"},{key:"Water filter",icon:"💧"},
+  {key:"Dish wash liquid",icon:"🧴"},{key:"Hand wash",icon:"🖐"},{key:"Room cleaning",icon:"🧹"}
+];
 const COLORS = [
   {bg:"#EEEDFE",text:"#3C3489",border:"#534AB7"},
   {bg:"#E1F5EE",text:"#085041",border:"#0F6E56"},
@@ -317,26 +297,57 @@ const COLORS = [
   {bg:"#E6F1FB",text:"#0C447C",border:"#185FA5"},
 ];
 
-function loadDB(){
-  const def = {
-    users:[{id:"akram",name:"Akram",password:"akram123",role:"admin",colorIdx:0}],
-    chores:[],expenses:[],essentials:[],notices:[]
-  };
-  try{ return JSON.parse(localStorage.getItem("rh_db")||"null") || def; }
-  catch{ return def; }
-}
-function saveDB(){ localStorage.setItem("rh_db", JSON.stringify(DB)); }
-function loadSession(){ return localStorage.getItem("rh_session")||null; }
-function saveSession(uid){ localStorage.setItem("rh_session",uid); }
-function clearSession(){ localStorage.removeItem("rh_session"); }
+const DEFAULT_DB = {
+  users:[{id:"akram",name:"Akram",password:"akram123",role:"admin",colorIdx:0}],
+  chores:[],expenses:[],essentials:[],notices:[]
+};
 
-let DB = loadDB();
+let DB = null;
 let currentUser = null;
 let resetTargetId = null;
+let saveTimer = null;
 
-// ─── BOOT ─────────────────────────────────────────────────────
-(function boot(){
-  const uid = loadSession();
+// ── JSONBIN API ───────────────────────────────────────────────
+async function loadFromCloud(){
+  if(BIN_ID){
+    try{
+      const r = await fetch(`${BIN_URL_BASE}/${BIN_ID}/latest`,{headers:{"X-Master-Key":BIN_KEY}});
+      if(r.ok){ const d=await r.json(); return d.record; }
+    }catch(e){}
+  }
+  // create new bin
+  try{
+    const r = await fetch(BIN_URL_BASE,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"roommate-hub"},
+      body:JSON.stringify(DEFAULT_DB)
+    });
+    if(r.ok){ const d=await r.json(); BIN_ID=d.metadata.id; localStorage.setItem("rh_bin_id",BIN_ID); return DEFAULT_DB; }
+  }catch(e){}
+  return DEFAULT_DB;
+}
+
+async function saveToCloud(){
+  if(!BIN_ID) return;
+  try{
+    await fetch(`${BIN_URL_BASE}/${BIN_ID}`,{
+      method:"PUT",
+      headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY},
+      body:JSON.stringify(DB)
+    });
+  }catch(e){}
+}
+
+function saveDB(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToCloud, 800);
+}
+
+// ── BOOT ─────────────────────────────────────────────────────
+(async function boot(){
+  show("loading");
+  DB = await loadFromCloud();
+  const uid = localStorage.getItem("rh_session");
   if(uid){
     const u = DB.users.find(x=>x.id===uid);
     if(u){ loginAs(u); return; }
@@ -349,30 +360,27 @@ function show(s){
   document.getElementById("screen-"+s).classList.add("active");
 }
 
-// ─── AUTH ─────────────────────────────────────────────────────
+// ── AUTH ──────────────────────────────────────────────────────
 function doLogin(){
-  const u = document.getElementById("login-user").value.trim().toLowerCase();
-  const p = document.getElementById("login-pass").value;
-  const user = DB.users.find(x=>x.id===u||x.name.toLowerCase()===u);
-  if(!user||user.password!==p){
-    document.getElementById("login-err").textContent="Invalid username or password.";
-    return;
-  }
-  saveSession(user.id);
+  const u=document.getElementById("login-user").value.trim().toLowerCase();
+  const p=document.getElementById("login-pass").value;
+  const user=DB.users.find(x=>x.id===u||x.name.toLowerCase()===u);
+  if(!user||user.password!==p){ document.getElementById("login-err").textContent="Invalid username or password."; return; }
+  localStorage.setItem("rh_session",user.id);
   loginAs(user);
 }
 
 function loginAs(user){
-  currentUser = user;
-  document.getElementById("topbar-name").textContent = user.name + (user.role==="admin"?" 👑":"");
-  document.getElementById("admin-tab-btn").style.display = user.role==="admin"?"inline-block":"none";
+  currentUser=user;
+  document.getElementById("topbar-name").textContent=user.name+(user.role==="admin"?" 👑":"");
+  document.getElementById("admin-tab-btn").style.display=user.role==="admin"?"inline-block":"none";
   show("app");
   refreshAll();
 }
 
 function doLogout(){
-  clearSession();
-  currentUser = null;
+  localStorage.removeItem("rh_session");
+  currentUser=null;
   document.getElementById("login-user").value="";
   document.getElementById("login-pass").value="";
   document.getElementById("login-err").textContent="";
@@ -381,8 +389,8 @@ function doLogout(){
 
 document.getElementById("login-pass").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
 
-// ─── TABS ─────────────────────────────────────────────────────
-function switchTab(name, btn){
+// ── TABS ──────────────────────────────────────────────────────
+function switchTab(name,btn){
   document.querySelectorAll(".tab-content").forEach(x=>x.classList.remove("active"));
   document.querySelectorAll(".tab-btn").forEach(x=>x.classList.remove("active"));
   document.getElementById("tab-"+name).classList.add("active");
@@ -390,14 +398,12 @@ function switchTab(name, btn){
   if(name==="admin") renderAdmin();
 }
 
-// ─── HELPERS ──────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────
 function getColor(idx){ return COLORS[idx%COLORS.length]; }
-function rmColor(uid){ const u=DB.users.find(x=>x.id===uid); return u?getColor(u.colorIdx||0):COLORS[0]; }
-function roommates(){ return DB.users.filter(x=>x.role!=="admin"||true); } // all users for assignment
-function fmtDate(d){ if(!d)return""; try{ return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }catch{ return d; } }
+function fmtDate(d){ if(!d)return""; try{ return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }catch{return d;} }
 function el(id){ return document.getElementById(id); }
 function badge(label,color){ return `<span class="badge" style="background:${color.bg};color:${color.text};border:1px solid ${color.border}">${label}</span>`; }
-function avatar(name,color,sm=""){ const i=name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); return `<div class="avatar${sm?" avatar-sm":""}" style="background:${color.bg};border:2px solid ${color.border};color:${color.text}">${i}</div>`; }
+function avatar(name,color,sm){ const i=name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); return `<div class="avatar${sm?" avatar-sm":""}" style="background:${color.bg};border:2px solid ${color.border};color:${color.text}">${i}</div>`; }
 
 function refreshAll(){
   populateSelects();
@@ -408,14 +414,13 @@ function refreshAll(){
 }
 
 function populateSelects(){
-  const users = DB.users;
+  const users=DB.users;
   ["chore-assign","exp-paidby","ess-buyer"].forEach(id=>{
     const s=el(id); const v=s.value;
-    s.innerHTML='<option value="">'+( id==="chore-assign"?"Assign to...":id==="exp-paidby"?"Paid by...":"Who bought it?")+'</option>';
+    s.innerHTML='<option value="">'+(id==="chore-assign"?"Assign to...":id==="exp-paidby"?"Paid by...":"Who bought it?")+'</option>';
     users.forEach(u=>{ s.innerHTML+=`<option value="${u.id}">${u.name}</option>`; });
     s.value=v;
   });
-  // split tags
   const st=el("exp-split-tags"); st.innerHTML="";
   users.forEach(u=>{
     const t=document.createElement("span");
@@ -425,22 +430,15 @@ function populateSelects(){
   });
 }
 
-// ─── CHORES ───────────────────────────────────────────────────
+// ── CHORES ────────────────────────────────────────────────────
 function addChore(){
-  const name=el("chore-name").value.trim();
-  const asgn=el("chore-assign").value;
+  const name=el("chore-name").value.trim(); const asgn=el("chore-assign").value;
   if(!name||!asgn)return alert("Fill in chore name and assignee.");
   DB.chores.push({id:Date.now(),name,assignee:asgn,done:false});
   saveDB(); el("chore-name").value=""; renderChores();
 }
-function toggleChore(id){
-  const c=DB.chores.find(x=>x.id===id); if(c) c.done=!c.done;
-  saveDB(); renderChores();
-}
-function deleteChore(id){
-  DB.chores=DB.chores.filter(x=>x.id!==id);
-  saveDB(); renderChores();
-}
+function toggleChore(id){ const c=DB.chores.find(x=>x.id===id); if(c)c.done=!c.done; saveDB(); renderChores(); }
+function deleteChore(id){ DB.chores=DB.chores.filter(x=>x.id!==id); saveDB(); renderChores(); }
 function renderChores(){
   const l=el("chores-list");
   if(!DB.chores.length){ l.innerHTML='<div class="empty">No chores yet</div>'; return; }
@@ -456,228 +454,102 @@ function renderChores(){
   }).join("");
 }
 
-// ─── EXPENSES ─────────────────────────────────────────────────
+// ── EXPENSES ──────────────────────────────────────────────────
 function addExpense(){
-  const desc=el("exp-desc").value.trim();
-  const amount=parseFloat(el("exp-amount").value);
-  const paidBy=el("exp-paidby").value;
+  const desc=el("exp-desc").value.trim(); const amount=parseFloat(el("exp-amount").value); const paidBy=el("exp-paidby").value;
   if(!desc||!amount||!paidBy)return alert("Fill in all expense fields.");
   const selected=[...el("exp-split-tags").querySelectorAll(".tag.active")].map(t=>t.dataset.uid);
   const split=selected.length?selected:DB.users.map(u=>u.id);
   const share=+(amount/split.length).toFixed(2);
   const owes=split.filter(id=>id!==paidBy).map(id=>({from:id,to:paidBy,amount:share,settled:false}));
   DB.expenses.push({id:Date.now(),desc,amount,paidBy,split,owes,date:new Date().toLocaleDateString()});
-  saveDB();
-  el("exp-desc").value=""; el("exp-amount").value=""; el("exp-paidby").value="";
+  saveDB(); el("exp-desc").value=""; el("exp-amount").value=""; el("exp-paidby").value="";
   el("exp-split-tags").querySelectorAll(".tag").forEach(t=>t.classList.remove("active"));
   renderExpenses();
 }
-function settleOwed(expId, fromId){
-  const exp=DB.expenses.find(x=>x.id===expId);
-  if(exp){ const o=exp.owes.find(x=>x.from===fromId); if(o) o.settled=true; }
-  saveDB(); renderExpenses();
-}
+function settleOwed(expId,fromId){ const exp=DB.expenses.find(x=>x.id===expId); if(exp){ const o=exp.owes.find(x=>x.from===fromId); if(o)o.settled=true; } saveDB(); renderExpenses(); }
 function deleteExp(id){ DB.expenses=DB.expenses.filter(x=>x.id!==id); saveDB(); renderExpenses(); }
 function netBalances(){
   const bal={};
   DB.users.forEach(u=>bal[u.id]=0);
-  DB.expenses.forEach(exp=>{
-    exp.owes.filter(o=>!o.settled).forEach(o=>{ bal[o.from]=(bal[o.from]||0)-o.amount; bal[o.to]=(bal[o.to]||0)+o.amount; });
-  });
+  DB.expenses.forEach(exp=>{ exp.owes.filter(o=>!o.settled).forEach(o=>{ bal[o.from]=(bal[o.from]||0)-o.amount; bal[o.to]=(bal[o.to]||0)+o.amount; }); });
   return bal;
 }
 function renderExpenses(){
   const bal=netBalances();
-  el("balances-list").innerHTML=DB.users.map(u=>{
-    const b=bal[u.id]||0; const col=getColor(u.colorIdx||0);
-    return `<div class="balance-row">${badge(u.name,col)}<span class="${b>=0?"balance-pos":"balance-neg"}">${b>=0?"+":""}$${b.toFixed(2)}</span></div>`;
-  }).join("");
+  el("balances-list").innerHTML=DB.users.map(u=>{ const b=bal[u.id]||0; const col=getColor(u.colorIdx||0); return `<div class="balance-row">${badge(u.name,col)}<span class="${b>=0?"balance-pos":"balance-neg"}">${b>=0?"+":""}$${b.toFixed(2)}</span></div>`; }).join("");
   const l=el("expenses-list");
   if(!DB.expenses.length){ l.innerHTML='<div class="empty">No expenses yet</div>'; return; }
   l.innerHTML=DB.expenses.map(exp=>{
     const pu=DB.users.find(x=>x.id===exp.paidBy)||{name:exp.paidBy,colorIdx:0};
     const pcol=getColor(pu.colorIdx||0);
-    const owesHtml=exp.owes.filter(o=>!o.settled).map(o=>{
-      const fu=DB.users.find(x=>x.id===o.from)||{name:o.from,colorIdx:0};
-      const tu=DB.users.find(x=>x.id===o.to)||{name:o.to,colorIdx:0};
-      return `<div style="display:flex;align-items:center;gap:7px;padding:5px 0">
-        ${badge(fu.name,getColor(fu.colorIdx||0))}
-        <span style="font-size:12px;color:#888">owes $${o.amount.toFixed(2)} to</span>
-        ${badge(tu.name,getColor(tu.colorIdx||0))}
-        <button class="btn btn-green btn-sm" style="margin-left:auto" onclick="settleOwed(${exp.id},'${o.from}')">Settle ✓</button>
-      </div>`;
-    }).join("");
+    const owesHtml=exp.owes.filter(o=>!o.settled).map(o=>{ const fu=DB.users.find(x=>x.id===o.from)||{name:o.from,colorIdx:0}; const tu=DB.users.find(x=>x.id===o.to)||{name:o.to,colorIdx:0}; return `<div style="display:flex;align-items:center;gap:7px;padding:5px 0">${badge(fu.name,getColor(fu.colorIdx||0))}<span style="font-size:12px;color:#888">owes $${o.amount.toFixed(2)} to</span>${badge(tu.name,getColor(tu.colorIdx||0))}<button class="btn btn-green btn-sm" style="margin-left:auto" onclick="settleOwed(${exp.id},'${o.from}')">Settle ✓</button></div>`; }).join("");
     const allSettled=exp.owes.every(o=>o.settled);
-    return `<div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div><div style="font-weight:600;font-size:14px">${exp.desc}</div>
-        <div style="font-size:12px;color:#888;margin-top:2px">${exp.date} · paid by ${badge(pu.name,pcol)}</div></div>
-        <div style="display:flex;gap:6px;align-items:center">
-          <span style="font-weight:600;font-size:15px">$${exp.amount.toFixed(2)}</span>
-          <button class="btn btn-danger btn-sm" onclick="deleteExp(${exp.id})">✕</button>
-        </div>
-      </div>
-      ${owesHtml?`<div style="margin-top:10px;border-top:1px solid #f0f0f8;padding-top:8px">${owesHtml}</div>`:""}
-      ${allSettled?`<div style="margin-top:6px;font-size:12px;color:#0d6e43">✓ All settled</div>`:""}
-    </div>`;
+    return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-weight:600;font-size:14px">${exp.desc}</div><div style="font-size:12px;color:#888;margin-top:2px">${exp.date} · paid by ${badge(pu.name,pcol)}</div></div><div style="display:flex;gap:6px;align-items:center"><span style="font-weight:600;font-size:15px">$${exp.amount.toFixed(2)}</span><button class="btn btn-danger btn-sm" onclick="deleteExp(${exp.id})">✕</button></div></div>${owesHtml?`<div style="margin-top:10px;border-top:1px solid #f0f0f8;padding-top:8px">${owesHtml}</div>`:""}${allSettled?`<div style="margin-top:6px;font-size:12px;color:#0d6e43">✓ All settled</div>`:""}</div>`;
   }).join("");
 }
 
-// ─── ESSENTIALS ───────────────────────────────────────────────
+// ── ESSENTIALS ────────────────────────────────────────────────
 function logEssential(){
-  const item=el("ess-item").value;
-  const buyer=el("ess-buyer").value;
-  const date=el("ess-date").value;
-  const phone=el("ess-phone").value.trim();
+  const item=el("ess-item").value; const buyer=el("ess-buyer").value; const date=el("ess-date").value; const phone=el("ess-phone").value.trim();
   if(!buyer||!date)return alert("Select who bought it and the date.");
   DB.essentials.unshift({id:Date.now(),item,buyer,date,phone});
-  saveDB();
-  el("ess-buyer").value=""; el("ess-date").value=""; el("ess-phone").value="";
-  renderEssentials();
+  saveDB(); el("ess-buyer").value=""; el("ess-date").value=""; el("ess-phone").value=""; renderEssentials();
 }
-function sendWA(id){
-  const entry=DB.essentials.find(x=>x.id===id); if(!entry)return;
-  const ess=ESSENTIALS_LIST.find(e=>e.key===entry.item);
-  const u=DB.users.find(x=>x.id===entry.buyer)||{name:entry.buyer};
-  const msg=encodeURIComponent(`${ess?.icon||"📦"} *Roommate Hub Reminder*\n\nHey! *${u.name}* last bought *${entry.item}* on *${fmtDate(entry.date)}*.\n\nTime to restock soon! 🏠`);
-  const ph=entry.phone?entry.phone.replace(/\D/g,""):"";
-  window.open(ph?`https://wa.me/${ph}?text=${msg}`:`https://wa.me/?text=${msg}`,"_blank");
-}
+function sendWA(id){ const entry=DB.essentials.find(x=>x.id===id); if(!entry)return; const ess=ESSENTIALS_LIST.find(e=>e.key===entry.item); const u=DB.users.find(x=>x.id===entry.buyer)||{name:entry.buyer}; const msg=encodeURIComponent(`${ess?.icon||"📦"} *Roommate Hub Reminder*\n\nHey! *${u.name}* last bought *${entry.item}* on *${fmtDate(entry.date)}*.\n\nTime to restock soon! 🏠`); const ph=entry.phone?entry.phone.replace(/\D/g,""):""; window.open(ph?`https://wa.me/${ph}?text=${msg}`:`https://wa.me/?text=${msg}`,"_blank"); }
 function deleteEss(id){ DB.essentials=DB.essentials.filter(x=>x.id!==id); saveDB(); renderEssentials(); }
 function renderEssentials(){
-  // last purchased per item
   el("ess-last").innerHTML=ESSENTIALS_LIST.map(ess=>{
     const last=DB.essentials.find(g=>g.item===ess.key);
-    if(!last) return `<div class="ess-item" style="opacity:.5">
-      <div class="ess-icon" style="background:#f0f0f8">${ess.icon}</div>
-      <div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">Not logged yet</div></div>
-    </div>`;
-    const u=DB.users.find(x=>x.id===last.buyer)||{name:last.buyer,colorIdx:0};
-    const col=getColor(u.colorIdx||0);
-    return `<div class="ess-item">
-      <div class="ess-icon" style="background:${col.bg}">${ess.icon}</div>
-      <div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">${fmtDate(last.date)}</div></div>
-      ${badge(u.name,col)}
-      <button class="btn-wa" onclick="sendWA(${last.id})" title="WhatsApp reminder">📲</button>
-    </div>`;
+    if(!last) return `<div class="ess-item" style="opacity:.5"><div class="ess-icon" style="background:#f0f0f8">${ess.icon}</div><div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">Not logged yet</div></div></div>`;
+    const u=DB.users.find(x=>x.id===last.buyer)||{name:last.buyer,colorIdx:0}; const col=getColor(u.colorIdx||0);
+    return `<div class="ess-item"><div class="ess-icon" style="background:${col.bg}">${ess.icon}</div><div class="ess-info"><div class="ess-name">${ess.key}</div><div class="ess-date">${fmtDate(last.date)}</div></div>${badge(u.name,col)}<button class="btn-wa" onclick="sendWA(${last.id})" title="WhatsApp reminder">📲</button></div>`;
   }).join("");
-
-  // history
   const hw=el("ess-history-wrap");
   if(!DB.essentials.length){ hw.style.display="none"; return; }
   hw.style.display="block";
-  el("ess-history").innerHTML=DB.essentials.map(g=>{
-    const ess=ESSENTIALS_LIST.find(e=>e.key===g.item);
-    const u=DB.users.find(x=>x.id===g.buyer)||{name:g.buyer,colorIdx:0};
-    const col=getColor(u.colorIdx||0);
-    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0f8">
-      <span style="font-size:16px">${ess?.icon||"📦"}</span>
-      <span style="font-size:13px;font-weight:500;flex:1">${g.item}</span>
-      ${badge(u.name,col)}
-      <span style="font-size:12px;color:#888">${fmtDate(g.date)}</span>
-      <button class="btn-wa" style="padding:4px 8px;font-size:12px" onclick="sendWA(${g.id})">📲</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteEss(${g.id})">✕</button>
-    </div>`;
-  }).join("");
+  el("ess-history").innerHTML=DB.essentials.map(g=>{ const ess=ESSENTIALS_LIST.find(e=>e.key===g.item); const u=DB.users.find(x=>x.id===g.buyer)||{name:g.buyer,colorIdx:0}; const col=getColor(u.colorIdx||0); return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0f8"><span style="font-size:16px">${ess?.icon||"📦"}</span><span style="font-size:13px;font-weight:500;flex:1">${g.item}</span>${badge(u.name,col)}<span style="font-size:12px;color:#888">${fmtDate(g.date)}</span><button class="btn-wa" style="padding:4px 8px;font-size:12px" onclick="sendWA(${g.id})">📲</button><button class="btn btn-danger btn-sm" onclick="deleteEss(${g.id})">✕</button></div>`; }).join("");
 }
 
-// ─── NOTICEBOARD ──────────────────────────────────────────────
-function postNotice(){
-  const text=el("notice-text").value.trim();
-  if(!text)return;
-  DB.notices.unshift({id:Date.now(),text,author:currentUser.id,date:new Date().toLocaleDateString()});
-  saveDB(); el("notice-text").value=""; renderNotices();
-}
-function deleteNotice(id){
-  if(currentUser.role!=="admin"){
-    const n=DB.notices.find(x=>x.id===id);
-    if(!n||n.author!==currentUser.id)return alert("You can only delete your own posts.");
-  }
-  DB.notices=DB.notices.filter(x=>x.id!==id); saveDB(); renderNotices();
-}
+// ── NOTICEBOARD ───────────────────────────────────────────────
+function postNotice(){ const text=el("notice-text").value.trim(); if(!text)return; DB.notices.unshift({id:Date.now(),text,author:currentUser.id,date:new Date().toLocaleDateString()}); saveDB(); el("notice-text").value=""; renderNotices(); }
+function deleteNotice(id){ if(currentUser.role!=="admin"){ const n=DB.notices.find(x=>x.id===id); if(!n||n.author!==currentUser.id)return alert("You can only delete your own posts."); } DB.notices=DB.notices.filter(x=>x.id!==id); saveDB(); renderNotices(); }
 function renderNotices(){
   const l=el("notices-list");
   if(!DB.notices.length){ l.innerHTML='<div class="empty">No announcements yet</div>'; return; }
-  l.innerHTML=DB.notices.map(n=>{
-    const u=DB.users.find(x=>x.id===n.author)||{name:"Unknown",colorIdx:0};
-    const col=getColor(u.colorIdx||0);
-    const canDel=currentUser.role==="admin"||n.author===currentUser.id;
-    return `<div class="notice-card">
-      <div class="notice-meta">
-        ${avatar(u.name,col,true)}
-        <span style="font-weight:600;font-size:13px">${u.name}</span>
-        <span style="font-size:12px;color:#aaa;margin-left:auto">${n.date}</span>
-        ${canDel?`<button class="btn btn-danger btn-sm" onclick="deleteNotice(${n.id})">✕</button>`:""}
-      </div>
-      <div class="notice-text">${n.text}</div>
-    </div>`;
-  }).join("");
+  l.innerHTML=DB.notices.map(n=>{ const u=DB.users.find(x=>x.id===n.author)||{name:"Unknown",colorIdx:0}; const col=getColor(u.colorIdx||0); const canDel=currentUser.role==="admin"||n.author===currentUser.id; return `<div class="notice-card"><div class="notice-meta">${avatar(u.name,col,true)}<span style="font-weight:600;font-size:13px">${u.name}</span><span style="font-size:12px;color:#aaa;margin-left:auto">${n.date}</span>${canDel?`<button class="btn btn-danger btn-sm" onclick="deleteNotice(${n.id})">✕</button>`:""}</div><div class="notice-text">${n.text}</div></div>`; }).join("");
 }
 
-// ─── AI ───────────────────────────────────────────────────────
-function setAiQ(el){ document.getElementById("ai-query").value=el.textContent; }
+// ── AI ────────────────────────────────────────────────────────
+function setAiQ(e){ el("ai-query").value=e.textContent; }
 async function askAI(){
   const q=el("ai-query").value.trim(); if(!q)return;
   const btn=el("ai-btn"); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Thinking...';
   el("ai-response").innerHTML="";
-  const ctx=`Roommates: ${DB.users.map(u=>u.name).join(", ")}. Chores: ${DB.chores.map(c=>{const u=DB.users.find(x=>x.id===c.assignee);return`${c.name}→${u?.name||c.assignee}(${c.done?"done":"pending"})`;}).join("; ")}. Expenses: ${DB.expenses.map(e=>{const u=DB.users.find(x=>x.id===e.paidBy);return`${e.desc} $${e.amount} paid by ${u?.name||e.paidBy}`;}).join("; ")}.`;
+  const ctx=`Roommates: ${DB.users.map(u=>u.name).join(", ")}. Chores: ${DB.chores.map(c=>{ const u=DB.users.find(x=>x.id===c.assignee); return`${c.name}→${u?.name||c.assignee}(${c.done?"done":"pending"})`; }).join("; ")}. Expenses: ${DB.expenses.map(e=>{ const u=DB.users.find(x=>x.id===e.paidBy); return`${e.desc} $${e.amount} paid by ${u?.name||e.paidBy}`; }).join("; ")}.`;
   try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
-        system:`You are a fair, friendly house mediator for a shared apartment. Be concise and practical. Context: ${ctx}`,
-        messages:[{role:"user",content:q}]})
-    });
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:`You are a fair friendly house mediator. Be concise and practical. Context: ${ctx}`,messages:[{role:"user",content:q}]})});
     const data=await res.json();
-    const txt=data.content?.[0]?.text||"No response.";
-    el("ai-response").innerHTML=`<div class="ai-response">${txt.replace(/\n/g,"<br>")}</div>`;
-  }catch(e){
-    el("ai-response").innerHTML=`<div class="ai-response" style="color:#c0392b">Something went wrong. Please try again.</div>`;
-  }
+    el("ai-response").innerHTML=`<div class="ai-response">${(data.content?.[0]?.text||"No response.").replace(/\n/g,"<br>")}</div>`;
+  }catch(e){ el("ai-response").innerHTML=`<div class="ai-response" style="color:#c0392b">Something went wrong. Please try again.</div>`; }
   btn.disabled=false; btn.textContent="Ask AI";
 }
 
-// ─── ADMIN ────────────────────────────────────────────────────
+// ── ADMIN ─────────────────────────────────────────────────────
 function adminAddUser(){
-  const name=el("new-user-name").value.trim();
-  const pass=el("new-user-pass").value;
-  const role=el("new-user-role").value;
+  const name=el("new-user-name").value.trim(); const pass=el("new-user-pass").value; const role=el("new-user-role").value;
   if(!name||!pass)return alert("Enter name and password.");
   const id=name.toLowerCase().replace(/\s+/g,"_")+"_"+Date.now();
-  const colorIdx=DB.users.length%COLORS.length;
-  DB.users.push({id,name,password:pass,role,colorIdx});
-  saveDB();
-  el("new-user-name").value=""; el("new-user-pass").value="";
+  DB.users.push({id,name,password:pass,role,colorIdx:DB.users.length%COLORS.length});
+  saveDB(); el("new-user-name").value=""; el("new-user-pass").value="";
   populateSelects(); renderAdmin();
 }
-function adminDeleteUser(id){
-  if(id===currentUser.id)return alert("You cannot delete your own account.");
-  if(!confirm("Delete this user?"))return;
-  DB.users=DB.users.filter(x=>x.id!==id);
-  saveDB(); populateSelects(); renderAdmin();
-}
+function adminDeleteUser(id){ if(id===currentUser.id)return alert("You cannot delete your own account."); if(!confirm("Delete this user?"))return; DB.users=DB.users.filter(x=>x.id!==id); saveDB(); populateSelects(); renderAdmin(); }
 function openReset(id){ resetTargetId=id; el("reset-pass").value=""; el("reset-pass2").value=""; el("reset-err").textContent=""; el("modal-reset").style.display="flex"; }
 function closeModal(){ el("modal-reset").style.display="none"; resetTargetId=null; }
-function confirmReset(){
-  const p=el("reset-pass").value; const p2=el("reset-pass2").value;
-  if(!p){ el("reset-err").textContent="Enter a password."; return; }
-  if(p!==p2){ el("reset-err").textContent="Passwords don't match."; return; }
-  const u=DB.users.find(x=>x.id===resetTargetId); if(u) u.password=p;
-  saveDB(); closeModal(); renderAdmin(); alert("Password updated!");
-}
+function confirmReset(){ const p=el("reset-pass").value; const p2=el("reset-pass2").value; if(!p){ el("reset-err").textContent="Enter a password."; return; } if(p!==p2){ el("reset-err").textContent="Passwords don't match."; return; } const u=DB.users.find(x=>x.id===resetTargetId); if(u)u.password=p; saveDB(); closeModal(); renderAdmin(); alert("Password updated!"); }
 function renderAdmin(){
-  el("admin-users-list").innerHTML=DB.users.map(u=>{
-    const col=getColor(u.colorIdx||0);
-    const isSelf=u.id===currentUser.id;
-    return `<div class="admin-user-row">
-      ${avatar(u.name,col,true)}
-      <span style="font-size:14px;font-weight:500;flex:1">${u.name}</span>
-      <span class="admin-badge ${u.role==="admin"?"":"user"}">${u.role==="admin"?"Admin":"User"}</span>
-      <button class="btn btn-sm" style="background:#f0f0ff;color:#534AB7;border-color:#AFA9EC" onclick="openReset('${u.id}')">Reset pw</button>
-      ${!isSelf?`<button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}')">Delete</button>`:`<span style="font-size:12px;color:#aaa">(you)</span>`}
-    </div>`;
-  }).join("");
+  el("admin-users-list").innerHTML=DB.users.map(u=>{ const col=getColor(u.colorIdx||0); const isSelf=u.id===currentUser.id; return `<div class="admin-user-row">${avatar(u.name,col,true)}<span style="font-size:14px;font-weight:500;flex:1">${u.name}</span><span class="admin-badge ${u.role==="admin"?"":"user"}">${u.role==="admin"?"Admin":"User"}</span><button class="btn btn-sm" style="background:#f0f0ff;color:#534AB7;border-color:#AFA9EC" onclick="openReset('${u.id}')">Reset pw</button>${!isSelf?`<button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${u.id}')">Delete</button>`:`<span style="font-size:12px;color:#aaa">(you)</span>`}</div>`; }).join("");
 }
 </script>
 </body>

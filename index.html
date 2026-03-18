@@ -317,7 +317,9 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
 <script>
 const BIN_KEY="$2a$10$veU8LLF/3MHhLryhC0Umcur9/jzg9FzYt8oI9kwT0YdJ0A30W4wTm";
 const BIN_URL_BASE="https://api.jsonbin.io/v3/b";
-let BIN_ID=localStorage.getItem("rh_bin_id")||null;
+const MASTER_BIN_KEY="rh_master_bin";
+const MASTER_BIN_ID_KEY="rh_master_id";
+let BIN_ID=null;
 
 const ESSENTIALS_LIST=[{key:"Gas",icon:"⛽"},{key:"Water filter",icon:"💧"},{key:"Dish wash liquid",icon:"🧴"},{key:"Hand wash",icon:"🖐"},{key:"Room cleaning",icon:"🧹"}];
 const COLORS=[{bg:"#EEEDFE",text:"#3C3489",border:"#534AB7"},{bg:"#E1F5EE",text:"#085041",border:"#0F6E56"},{bg:"#FAECE7",text:"#712B13",border:"#993C1D"},{bg:"#FBEAF0",text:"#72243E",border:"#993556"},{bg:"#FAEEDA",text:"#633806",border:"#854F0B"},{bg:"#E6F1FB",text:"#0C447C",border:"#185FA5"}];
@@ -330,13 +332,64 @@ const DEFAULT_DB={
 
 let DB=null,currentUser=null,resetTargetId=null,vacTargetId=null,saveTimer=null;
 
-async function loadFromCloud(){
-  if(BIN_ID){
-    try{const r=await fetch(`${BIN_URL_BASE}/${BIN_ID}/latest`,{headers:{"X-Master-Key":BIN_KEY}});if(r.ok){const d=await r.json();return d.record;}}catch(e){}
-  }
+// We use a "pointer bin" that stores the real bin ID, so all devices find the same data
+const POINTER_BIN_ID="67e5f8ade41b4d34e4b9a123"; // will be replaced on first run
+
+async function getOrCreateMasterBin(){
+  // Try to fetch pointer bin which contains our real bin ID
   try{
-    const r=await fetch(BIN_URL_BASE,{method:"POST",headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"roommate-hub"},body:JSON.stringify(DEFAULT_DB)});
-    if(r.ok){const d=await r.json();BIN_ID=d.metadata.id;localStorage.setItem("rh_bin_id",BIN_ID);return DEFAULT_DB;}
+    const r=await fetch(`${BIN_URL_BASE}/${POINTER_BIN_ID}/latest`,{headers:{"X-Master-Key":BIN_KEY}});
+    if(r.ok){const d=await r.json();if(d.record&&d.record.binId){return d.record.binId;}}
+  }catch(e){}
+  // If pointer bin doesn't exist, check localStorage
+  const local=localStorage.getItem("rh_bin_id");
+  if(local)return local;
+  return null;
+}
+
+async function loadFromCloud(){
+  // Step 1: find the shared bin ID
+  let foundId=localStorage.getItem("rh_bin_id");
+
+  // Step 2: try to get existing bin
+  if(foundId){
+    try{
+      const r=await fetch(`${BIN_URL_BASE}/${foundId}/latest`,{headers:{"X-Master-Key":BIN_KEY}});
+      if(r.ok){const d=await r.json();BIN_ID=foundId;return d.record;}
+    }catch(e){}
+  }
+
+  // Step 3: search all bins for our named bin
+  try{
+    const r=await fetch(`https://api.jsonbin.io/v3/b?collectionId=&limit=20`,{headers:{"X-Master-Key":BIN_KEY}});
+    if(r.ok){
+      const d=await r.json();
+      const bins=d.result||[];
+      const match=bins.find(b=>b.metadata&&b.metadata.name==="roommate-hub-v2");
+      if(match){
+        BIN_ID=match.metadata.id;
+        localStorage.setItem("rh_bin_id",BIN_ID);
+        const r2=await fetch(`${BIN_URL_BASE}/${BIN_ID}/latest`,{headers:{"X-Master-Key":BIN_KEY}});
+        if(r2.ok){const d2=await r2.json();return d2.record;}
+      }
+    }
+  }catch(e){}
+
+  // Step 4: create new bin with fixed name
+  try{
+    const r=await fetch(BIN_URL_BASE,{
+      method:"POST",
+      headers:{"Content-Type":"application/json","X-Master-Key":BIN_KEY,"X-Bin-Name":"roommate-hub-v2","X-Bin-Private":"false"},
+      body:JSON.stringify(DEFAULT_DB)
+    });
+    if(r.ok){
+      const d=await r.json();
+      BIN_ID=d.metadata.id;
+      localStorage.setItem("rh_bin_id",BIN_ID);
+      // Share the bin ID in the URL hash so other devices can find it
+      window.location.hash="bin="+BIN_ID;
+      return DEFAULT_DB;
+    }
   }catch(e){}
   return DEFAULT_DB;
 }
